@@ -21,7 +21,7 @@
 #include<cstdio>
 #include<cuda.h>
 #include "serial_code.h"
-#include "mem_error.h"
+#include "utils.h"
 
 #define BLOCKSIZE 16
 #define SIZE 1024
@@ -129,17 +129,7 @@ void relError(double* dRes,double* hRes,int size)
 }
 
 
-/*prints the result in screen*/
-void print_on_screen(char * program_name,float tsec,double gflops,int size,int flag)//flag=1 if gflops has been calculated else flag =0
-{
-    printf("\n---------------%s----------------\n",program_name);
-    printf("\tSIZE\t TIME_SEC\t Gflops\n");
-    if(flag==1)
-        printf("\t%d\t%f\t%lf\t",size,tsec,gflops);
-    else
-        printf("\t%d\t%lf\t%lf\t",size,"---","---");
 
-}
 
 /*funtion to check blocks per grid and threads per block*/
 void check_block_grid_dim(cudaDeviceProp devProp,dim3 blockDim,dim3 gridDim)
@@ -233,7 +223,7 @@ int main()
     cudaEvent_t start,stop;
 
     device_Count=get_DeviceCount();
-    printf("\n\nNUmber of Devices : %d\n\n", device_Count);
+    printf("\n\nNumber of Devices : %d\n\n", device_Count);
 
     // Device Selection, Device 1: Tesla C1060
     cudaSetDevice(0);
@@ -296,12 +286,10 @@ int main()
     CUDA_SAFE_CALL(cudaEventSynchronize (stop));
     CUDA_SAFE_CALL(cudaEventElapsedTime ( &elapsedTime, start, stop));
 
+
+    // calling funtion for measuring Gflops & printing the result on screen
     Tsec= 1.0e-3*elapsedTime;
-
-    // calling funtion for measuring Gflops
     calculate_gflops(Tsec);
-
-    //printing the result on screen
     print_on_screen("MAT VECT MULTIPLICATION",Tsec,calculate_gflops(Tsec),size,1);
 
 
@@ -309,7 +297,6 @@ int main()
     CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResVect,matRowSize*sizeof(double),cudaMemcpyDeviceToHost));
 
     // CPU calculation..and checking error deviation....
-
     serial_code *cpu_user = new serial_code(matRowSize, matColSize, host_Mat, host_Vect, vlength, size);
     cpu_user->CPU_MatVect();
     relError(cpu_user->get_result(), host_ResVect, size);

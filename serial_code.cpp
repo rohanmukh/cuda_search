@@ -4,7 +4,7 @@
 
 #include "serial_code.h"
 #include <cuda.h>
-#include "mem_error.h"
+#include "utils.h"
 
 /*sequential function for mat vect multiplication*/\
 void serial_code::CPU_MatVect() {
