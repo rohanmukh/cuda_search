@@ -9,9 +9,6 @@
 /*Check for safe return of all calls to the device */
 void CUDA_SAFE_CALL(cudaError_t call);
 
-/*free memory*/
-void dfree(double * arr[],int len);
-
 /*funtion to check blocks per grid and threads per block*/
 void check_block_grid_dim(cudaDeviceProp devProp,dim3 blockDim,dim3 gridDim);
 

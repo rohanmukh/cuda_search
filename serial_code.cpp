@@ -6,6 +6,17 @@
 #include <cuda.h>
 #include "utils.h"
 
+
+serial_code::serial_code(int matRowSize, int matColSize, double *host_Mat,
+                         double *host_Vect, int vlength, int size) {
+    this->matRowSize = matRowSize;
+    this->matColSize = matColSize;
+    this->host_Mat = host_Mat;
+    this->host_Vect = host_Vect;
+    this->vlength = vlength;
+    this->size = size;
+}
+
 /*sequential function for mat vect multiplication*/\
 void serial_code::CPU_MatVect() {
     cpu_ResVect = (double *) malloc(matRowSize * sizeof(double));
@@ -24,16 +35,6 @@ double *serial_code::get_result() {
     return this->cpu_ResVect;
 }
 
-
-serial_code::serial_code(int matRowSize, int matColSize, double *host_Mat,
-        double *host_Vect, int vlength, int size) {
-    this->matRowSize = matRowSize;
-    this->matColSize = matColSize;
-    this->host_Mat = host_Mat;
-    this->host_Vect = host_Vect;
-    this->vlength = vlength;
-    this->size = size;
-}
 
 void serial_code::_free(){
     free(this->cpu_ResVect);

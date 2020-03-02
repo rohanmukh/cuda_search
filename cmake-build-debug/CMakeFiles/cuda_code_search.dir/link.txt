@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/cuda_code_search.dir/serial_code.cpp.o CMakeFiles/cuda_code_search.dir/utils.cpp.o CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o  -o cuda_code_search 
+/usr/bin/c++  -g   CMakeFiles/cuda_code_search.dir/serial_code.cpp.o CMakeFiles/cuda_code_search.dir/utils.cpp.o CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o CMakeFiles/cuda_code_search.dir/gpu_ops.cpp.o  -o cuda_code_search 
