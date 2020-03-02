@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/cuda_code_search.dir/serial_code.cpp.o CMakeFiles/cuda_code_search.dir/mem_error.cpp.o  -o cuda_code_search 

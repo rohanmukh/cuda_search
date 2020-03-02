@@ -1,0 +1,3 @@
+/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles/cuda_code_search.dir
+/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles/edit_cache.dir
