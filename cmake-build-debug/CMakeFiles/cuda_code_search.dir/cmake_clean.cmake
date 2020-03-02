@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/cuda_code_search.dir/mem_error.cpp.o"
+  "CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o"
   "CMakeFiles/cuda_code_search.dir/serial_code.cpp.o"
+  "CMakeFiles/cuda_code_search.dir/utils.cpp.o"
   "cuda_code_search"
   "cuda_code_search.pdb"
 )

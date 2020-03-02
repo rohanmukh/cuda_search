@@ -4,8 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/rm38/CLionProjects/cuda_code_search/mem_error.cpp" "/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles/cuda_code_search.dir/mem_error.cpp.o"
+  "/home/rm38/CLionProjects/cuda_code_search/cuda_utils.cpp" "/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o"
   "/home/rm38/CLionProjects/cuda_code_search/serial_code.cpp" "/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles/cuda_code_search.dir/serial_code.cpp.o"
+  "/home/rm38/CLionProjects/cuda_code_search/utils.cpp" "/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles/cuda_code_search.dir/utils.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

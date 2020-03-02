@@ -70,32 +70,47 @@ CMakeFiles/cuda_code_search.dir/serial_code.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cuda_code_search.dir/serial_code.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/rm38/CLionProjects/cuda_code_search/serial_code.cpp -o CMakeFiles/cuda_code_search.dir/serial_code.cpp.s
 
-CMakeFiles/cuda_code_search.dir/mem_error.cpp.o: CMakeFiles/cuda_code_search.dir/flags.make
-CMakeFiles/cuda_code_search.dir/mem_error.cpp.o: ../mem_error.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cuda_code_search.dir/mem_error.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cuda_code_search.dir/mem_error.cpp.o -c /home/rm38/CLionProjects/cuda_code_search/mem_error.cpp
+CMakeFiles/cuda_code_search.dir/utils.cpp.o: CMakeFiles/cuda_code_search.dir/flags.make
+CMakeFiles/cuda_code_search.dir/utils.cpp.o: ../utils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cuda_code_search.dir/utils.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cuda_code_search.dir/utils.cpp.o -c /home/rm38/CLionProjects/cuda_code_search/utils.cpp
 
-CMakeFiles/cuda_code_search.dir/mem_error.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cuda_code_search.dir/mem_error.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/rm38/CLionProjects/cuda_code_search/mem_error.cpp > CMakeFiles/cuda_code_search.dir/mem_error.cpp.i
+CMakeFiles/cuda_code_search.dir/utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cuda_code_search.dir/utils.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/rm38/CLionProjects/cuda_code_search/utils.cpp > CMakeFiles/cuda_code_search.dir/utils.cpp.i
 
-CMakeFiles/cuda_code_search.dir/mem_error.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cuda_code_search.dir/mem_error.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/rm38/CLionProjects/cuda_code_search/mem_error.cpp -o CMakeFiles/cuda_code_search.dir/mem_error.cpp.s
+CMakeFiles/cuda_code_search.dir/utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cuda_code_search.dir/utils.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/rm38/CLionProjects/cuda_code_search/utils.cpp -o CMakeFiles/cuda_code_search.dir/utils.cpp.s
+
+CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o: CMakeFiles/cuda_code_search.dir/flags.make
+CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o: ../cuda_utils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o -c /home/rm38/CLionProjects/cuda_code_search/cuda_utils.cpp
+
+CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/rm38/CLionProjects/cuda_code_search/cuda_utils.cpp > CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.i
+
+CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/rm38/CLionProjects/cuda_code_search/cuda_utils.cpp -o CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.s
 
 # Object files for target cuda_code_search
 cuda_code_search_OBJECTS = \
 "CMakeFiles/cuda_code_search.dir/serial_code.cpp.o" \
-"CMakeFiles/cuda_code_search.dir/mem_error.cpp.o"
+"CMakeFiles/cuda_code_search.dir/utils.cpp.o" \
+"CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o"
 
 # External object files for target cuda_code_search
 cuda_code_search_EXTERNAL_OBJECTS =
 
 cuda_code_search: CMakeFiles/cuda_code_search.dir/serial_code.cpp.o
-cuda_code_search: CMakeFiles/cuda_code_search.dir/mem_error.cpp.o
+cuda_code_search: CMakeFiles/cuda_code_search.dir/utils.cpp.o
+cuda_code_search: CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o
 cuda_code_search: CMakeFiles/cuda_code_search.dir/build.make
 cuda_code_search: CMakeFiles/cuda_code_search.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable cuda_code_search"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/rm38/CLionProjects/cuda_code_search/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable cuda_code_search"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cuda_code_search.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

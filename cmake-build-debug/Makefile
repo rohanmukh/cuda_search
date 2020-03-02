@@ -123,32 +123,32 @@ cuda_code_search/fast:
 	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/build
 .PHONY : cuda_code_search/fast
 
-mem_error.o: mem_error.cpp.o
+cuda_utils.o: cuda_utils.cpp.o
 
-.PHONY : mem_error.o
+.PHONY : cuda_utils.o
 
 # target to build an object file
-mem_error.cpp.o:
-	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/mem_error.cpp.o
-.PHONY : mem_error.cpp.o
+cuda_utils.cpp.o:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.o
+.PHONY : cuda_utils.cpp.o
 
-mem_error.i: mem_error.cpp.i
+cuda_utils.i: cuda_utils.cpp.i
 
-.PHONY : mem_error.i
+.PHONY : cuda_utils.i
 
 # target to preprocess a source file
-mem_error.cpp.i:
-	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/mem_error.cpp.i
-.PHONY : mem_error.cpp.i
+cuda_utils.cpp.i:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.i
+.PHONY : cuda_utils.cpp.i
 
-mem_error.s: mem_error.cpp.s
+cuda_utils.s: cuda_utils.cpp.s
 
-.PHONY : mem_error.s
+.PHONY : cuda_utils.s
 
 # target to generate assembly for a file
-mem_error.cpp.s:
-	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/mem_error.cpp.s
-.PHONY : mem_error.cpp.s
+cuda_utils.cpp.s:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.s
+.PHONY : cuda_utils.cpp.s
 
 serial_code.o: serial_code.cpp.o
 
@@ -177,6 +177,33 @@ serial_code.cpp.s:
 	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/serial_code.cpp.s
 .PHONY : serial_code.cpp.s
 
+utils.o: utils.cpp.o
+
+.PHONY : utils.o
+
+# target to build an object file
+utils.cpp.o:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/utils.cpp.o
+.PHONY : utils.cpp.o
+
+utils.i: utils.cpp.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.cpp.i:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/utils.cpp.i
+.PHONY : utils.cpp.i
+
+utils.s: utils.cpp.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.cpp.s:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/utils.cpp.s
+.PHONY : utils.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +213,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... cuda_code_search"
 	@echo "... edit_cache"
-	@echo "... mem_error.o"
-	@echo "... mem_error.i"
-	@echo "... mem_error.s"
+	@echo "... cuda_utils.o"
+	@echo "... cuda_utils.i"
+	@echo "... cuda_utils.s"
 	@echo "... serial_code.o"
 	@echo "... serial_code.i"
 	@echo "... serial_code.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 .PHONY : help
 
 

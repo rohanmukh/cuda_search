@@ -84,19 +84,25 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/cuda_utils.cpp">
+			<Option target="cuda_code_search"/>
+		</Unit>
+		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/cuda_utils.h">
+			<Option target="cuda_code_search"/>
+		</Unit>
 		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/main.cu">
-			<Option target="cuda_code_search"/>
-		</Unit>
-		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/mem_error.cpp">
-			<Option target="cuda_code_search"/>
-		</Unit>
-		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/mem_error.h">
 			<Option target="cuda_code_search"/>
 		</Unit>
 		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/serial_code.cpp">
 			<Option target="cuda_code_search"/>
 		</Unit>
 		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/serial_code.h">
+			<Option target="cuda_code_search"/>
+		</Unit>
+		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/utils.cpp">
+			<Option target="cuda_code_search"/>
+		</Unit>
+		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/utils.h">
 			<Option target="cuda_code_search"/>
 		</Unit>
 		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/CMakeLists.txt">
