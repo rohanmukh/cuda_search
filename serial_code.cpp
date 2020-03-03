@@ -7,27 +7,26 @@
 #include "utils.h"
 
 
-serial_code::serial_code(int matRowSize, int matColSize, double *host_Mat,
-                         double *host_Vect, int vlength, int size) {
-    this->matRowSize = matRowSize;
-    this->matColSize = matColSize;
+serial_code::serial_code(int batch_size, int dimension, double *host_Mat,
+                         double *host_Vect, int size) {
+    this->batch_size = batch_size;
+    this->dimension = dimension;
     this->host_Mat = host_Mat;
     this->host_Vect = host_Vect;
-    this->vlength = vlength;
     this->size = size;
 }
 
 /*sequential function for mat vect multiplication*/\
 void serial_code::CPU_MatVectMult() {
-    cpu_ResVect = (double *) malloc(matRowSize * sizeof(double));
+    cpu_ResVect = (double *) malloc(batch_size * sizeof(double));
     if (cpu_ResVect == NULL)
         mem_error("cpu_ResVect", "vectmatmul", size, "double");
 
     int i, j;
-    for (i = 0; i < matRowSize; i++) {
+    for (i = 0; i < batch_size; i++) {
         cpu_ResVect[i] = 0;
-        for (j = 0; j < matColSize; j++)
-            cpu_ResVect[i] += host_Mat[i * vlength + j] * host_Vect[j];
+        for (j = 0; j < dimension; j++)
+            cpu_ResVect[i] += host_Mat[i * dimension + j] * host_Vect[j];
     }
 }
 

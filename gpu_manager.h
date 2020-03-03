@@ -10,12 +10,12 @@
 #include "gpu_ops.h"
 
 class gpu_manager {
-    int matRowSize, matColSize, vlength;
+    int batch_size, dimension;
     int num_devices, batch_matRowSize;
     std::vector<gpu_ops*> list_of_users;
 
 public:
-    gpu_manager(int, int, int);
+    gpu_manager(int, int);
     void add_user(int);
     void copy_data(double*, double*);
     float compute_and_store(double*);

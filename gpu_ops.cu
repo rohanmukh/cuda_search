@@ -12,13 +12,13 @@ void gpu_ops::launch_kernel() {
 
     /* threads_per_block, blocks_per_grid  */
     int max=BLOCKSIZE*BLOCKSIZE;
-    int BlocksPerGrid=matRowSize/max+1;
+    int BlocksPerGrid= batch_size / max + 1;
     dim3 dimBlock(BLOCKSIZE,BLOCKSIZE);
-    if(matRowSize%max==0)BlocksPerGrid--;
+    if(batch_size % max == 0)BlocksPerGrid--;
     dim3 dimGrid(1,BlocksPerGrid);
     check_block_grid_dim(deviceProp,dimBlock,dimGrid);
 
-    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_Mat,device_Vect,matRowSize,vlength,device_ResVect);
+    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_Mat,device_Vect,batch_size,dimension,device_ResVect);
 
 }
 
@@ -41,23 +41,23 @@ void gpu_ops::set_device(int device_id, std::string message="") {
 
 void gpu_ops::allocate_memory() {
     //allocating memory on GPU
-    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Mat, matRowSize*matColSize* sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Vect, vlength* sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_ResVect, matRowSize* sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_Mat, batch_size * dimension * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Vect, dimension* sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_ResVect, batch_size * sizeof(double)));
 }
 
 
 void gpu_ops::copy_to_device(double* host_Mat, double* host_Vect) {
     //moving data from CPU to GPU
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Mat, (void*)host_Mat, matRowSize*matColSize*sizeof(double) ,cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Vect, (void*)host_Vect,vlength*sizeof(double),cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Mat, (void*)host_Mat, batch_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Vect, (void*)host_Vect,dimension*sizeof(double),cudaMemcpyHostToDevice));
 }
 
 
 
 void gpu_ops::copy_to_host(double *host_ResVect) {
     //retriving result from device
-    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResVect,matRowSize*sizeof(double),cudaMemcpyDeviceToHost));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResVect, batch_size * sizeof(double), cudaMemcpyDeviceToHost));
 
 }
 
@@ -85,11 +85,10 @@ float gpu_ops::stop_event() {
     return Tsec;
 }
 
-gpu_ops::gpu_ops(int device_id, int matRowSize, int matColSize, int vlength) {
+gpu_ops::gpu_ops(int device_id, int matRowSize, int matColSize) {
     this->device_id = device_id;
-    this->matRowSize = matRowSize;
-    this->matColSize = matColSize;
-    this->vlength = vlength;
+    this->batch_size = matRowSize;
+    this->dimension = matColSize;
     set_device(device_id);
     get_device_property();
 }

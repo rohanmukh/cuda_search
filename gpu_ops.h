@@ -15,10 +15,10 @@ class gpu_ops {
 private:
 
     // size of the data
-    int matRowSize, matColSize, vlength;
+    int batch_size, dimension;
 
     // data
-    double *device_Mat,*device_Vect, *device_ResVect;
+    double *device_Mat, *device_Vect, *device_ResVect;
 
     // device
     int device_id;
@@ -29,7 +29,7 @@ private:
 
 
 public:
-    gpu_ops(int, int, int, int);
+    gpu_ops(int, int, int);
 
     //data
     void allocate_memory();

@@ -6,23 +6,21 @@
 #include <cuda_runtime_api.h>
 
 /*Get the number of GPU devices present on the host */
-gpu_manager::gpu_manager(int matRowSize, int matColSize, int vlength){
-    this->matRowSize = matRowSize;
-    this->matColSize = matColSize;
-    this->vlength = vlength;
+gpu_manager::gpu_manager(int batch_size, int dimension){
+    this->batch_size = batch_size;
+    this->dimension = dimension;
     cudaGetDeviceCount(&this->num_devices);
 
-    batch_matRowSize = matRowSize / this->num_devices;
+    batch_matRowSize = batch_size / this->num_devices;
     // ASSERT TODO
 
     for(int i=0; i<this->num_devices; i++)
-        this->list_of_users.push_back(new gpu_ops(i, batch_matRowSize, matColSize, vlength));
+        this->list_of_users.push_back(new gpu_ops(i, batch_matRowSize, dimension));
 }
 
 
-
 void gpu_manager::add_user(int device_id){
-    list_of_users.at(device_id) = new gpu_ops(device_id, matRowSize, matColSize, vlength); 
+    list_of_users.at(device_id) = new gpu_ops(device_id, batch_size, dimension);
 }
 
 void gpu_manager::copy_data(double* host_Mat, double* host_Vect) {

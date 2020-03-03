@@ -19,31 +19,29 @@
 
 
 #include<cstdio>
-#include<cuda.h>
 #include "serial_code.h"
 #include "utils.h"
-#include "cuda_utils.h"
 #include "gpu_manager.h"
 #include "host_ops.h"
 
 #define SIZE 1024
 
 
-int vlength, matRowSize , matColSize;
+int data_size , dimension;
 int size = SIZE;
 
 /*main function*/
 int main()
 {
     // Vector length , Matrix Row and Col sizes..............
-    vlength = matColSize = SIZE;
-    matRowSize = SIZE*1;
+    dimension = SIZE;
+    data_size = SIZE * 1;
 
-    host_ops *host_system = new host_ops(matRowSize, matColSize, vlength);
+    host_ops *host_system = new host_ops(data_size, dimension);
     host_system->fill_with_random_data();
 
 
-    gpu_manager* manager = new gpu_manager(matRowSize, matColSize, vlength);
+    gpu_manager* manager = new gpu_manager(data_size, dimension);
     manager->copy_data(host_system->host_Mat, host_system->host_Vect);
     float time_sec = manager->compute_and_store(host_system->host_ResVect);
 
@@ -53,7 +51,7 @@ int main()
 
 
     // CPU calculation..and checking error deviation....
-    serial_code *cpu_user = new serial_code(matRowSize, matColSize, host_system->host_Mat, host_system->host_Vect, vlength, size);
+    serial_code *cpu_user = new serial_code(data_size, dimension, host_system->host_Mat, host_system->host_Vect, size);
     cpu_user->CPU_MatVectMult();
     relative_error(cpu_user->get_result(), host_system->host_ResVect, size);
     printf("\n ----------------------------------------------------------------------\n");
