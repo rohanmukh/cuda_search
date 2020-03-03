@@ -23,7 +23,7 @@
 #include "serial_code.h"
 #include "utils.h"
 #include "cuda_utils.h"
-#include "gpu_ops.h"
+#include "gpu_manager.h"
 #include "host_ops.h"
 
 #define SIZE 1024
@@ -42,20 +42,10 @@ int main()
     host_ops *host_system = new host_ops(matRowSize, matColSize, vlength);
     host_system->fill_with_random_data();
 
-    int device_Count=get_DeviceCount();
-    printf("\n\nNumber of Devices : %d\n\n", device_Count);
 
-
-
-    gpu_ops *gpu_user = new gpu_ops(matRowSize, matColSize, vlength);
-    gpu_user->set_device(0);
-    gpu_user->start_event();
-    gpu_user->allocate_memory();
-    gpu_user->copy_to_device(host_system->host_Mat, host_system->host_Vect);
-    gpu_user->launch_kernel();
-    gpu_user->copy_to_host(host_system->host_ResVect);
-    float time_sec = gpu_user->stop_event();
-
+    gpu_manager* manager = new gpu_manager(0, matRowSize, matColSize, vlength);
+    manager->copy_data(host_system->host_Mat, host_system->host_Vect);
+    float time_sec = manager->compute_and_store(host_system->host_ResVect);
 
 
     // calling funtion for measuring Gflops & printing the result on screen
@@ -69,7 +59,7 @@ int main()
     printf("\n ----------------------------------------------------------------------\n");
 
     host_system->_free();
-    gpu_user->_free();
+    manager->_free();
     cpu_user->_free();
 
     return 0;

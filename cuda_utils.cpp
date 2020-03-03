@@ -62,10 +62,3 @@ void check_block_grid_dim(cudaDeviceProp devProp,dim3 blockDim,dim3 gridDim)
     }
 }
 
-/*Get the number of GPU devices present on the host */
-int get_DeviceCount()
-{
-    int count;
-    cudaGetDeviceCount(&count);
-    return count;
-}

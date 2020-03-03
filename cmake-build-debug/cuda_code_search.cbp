@@ -90,6 +90,12 @@
 		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/cuda_utils.h">
 			<Option target="cuda_code_search"/>
 		</Unit>
+		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/gpu_manager.cpp">
+			<Option target="cuda_code_search"/>
+		</Unit>
+		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/gpu_manager.h">
+			<Option target="cuda_code_search"/>
+		</Unit>
 		<Unit filename="/home/rm38/CLionProjects/cuda_code_search/gpu_ops.cu">
 			<Option target="cuda_code_search"/>
 		</Unit>

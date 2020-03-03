@@ -150,6 +150,33 @@ cuda_utils.cpp.s:
 	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.s
 .PHONY : cuda_utils.cpp.s
 
+gpu_manager.o: gpu_manager.cpp.o
+
+.PHONY : gpu_manager.o
+
+# target to build an object file
+gpu_manager.cpp.o:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/gpu_manager.cpp.o
+.PHONY : gpu_manager.cpp.o
+
+gpu_manager.i: gpu_manager.cpp.i
+
+.PHONY : gpu_manager.i
+
+# target to preprocess a source file
+gpu_manager.cpp.i:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/gpu_manager.cpp.i
+.PHONY : gpu_manager.cpp.i
+
+gpu_manager.s: gpu_manager.cpp.s
+
+.PHONY : gpu_manager.s
+
+# target to generate assembly for a file
+gpu_manager.cpp.s:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/gpu_manager.cpp.s
+.PHONY : gpu_manager.cpp.s
+
 host_ops.o: host_ops.cpp.o
 
 .PHONY : host_ops.o
@@ -243,6 +270,9 @@ help:
 	@echo "... cuda_utils.o"
 	@echo "... cuda_utils.i"
 	@echo "... cuda_utils.s"
+	@echo "... gpu_manager.o"
+	@echo "... gpu_manager.i"
+	@echo "... gpu_manager.s"
 	@echo "... host_ops.o"
 	@echo "... host_ops.i"
 	@echo "... host_ops.s"
