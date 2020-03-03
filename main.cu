@@ -19,12 +19,13 @@
 
 
 #include<cstdio>
+#include <iostream>
 #include "serial_code.h"
 #include "utils.h"
 #include "gpu_manager.h"
 #include "host_ops.h"
 
-#define DATA_SIZE 1024
+#define DATA_SIZE 1024000
 #define DIMENSION 256
 
 
@@ -35,10 +36,11 @@ int main()
     int dimension = DIMENSION;
     int data_size = DATA_SIZE;
 
+    std::cout << "Initializing Host" << std::endl;
     host_ops *host_system = new host_ops(data_size, dimension);
     host_system->fill_with_random_data();
 
-
+    std::cout << "Initializing GPU Manager" << std::endl;
     gpu_manager* manager = new gpu_manager(data_size, dimension);
     manager->copy_data(host_system->host_Mat, host_system->host_Vect);
     float time_sec = manager->compute_and_store(host_system->host_ResVect);
@@ -49,6 +51,7 @@ int main()
 
 
     // CPU calculation..and checking error deviation....
+    std::cout << "CPU Calculation" << std::endl;
     serial_code *cpu_user = new serial_code(data_size, dimension, host_system->host_Mat, host_system->host_Vect);
     cpu_user->CPU_MatVectMult();
 
