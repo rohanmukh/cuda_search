@@ -13,34 +13,33 @@ gpu_manager::gpu_manager(int batch_size, int dimension){
     this->dimension = dimension;
 
     // get number of devices
-
     this->num_devices = get_DeviceCount();
 
     assert(batch_size % this->num_devices == 0);
     this->batch_matRowSize = batch_size / this->num_devices;
 
+    std::cout << "========================Initializing data for all GPUs======================================" << std::endl;
     for(int i=0; i<this->num_devices; i++)
         this->list_of_users.push_back(new gpu_ops(i, batch_matRowSize, dimension));
 }
 
 
-void gpu_manager::add_user(int device_id){
-    list_of_users.at(device_id) = new gpu_ops(device_id, batch_size, dimension);
-}
+//void gpu_manager::add_user(int device_id){
+//    list_of_users.at(device_id) = new gpu_ops(device_id, batch_size, dimension);
+//}
 
 void gpu_manager::copy_data(double* host_Mat, double* host_Vect) {
-    std::cout << "Copying data for all GPUs" << std::endl;
+    std::cout << "========================Copying data for all GPUs======================================" << std::endl;
     for(int i=0; i<list_of_users.size(); i++){
-        list_of_users.at(i)->set_device(i,"Data Copy");
-        list_of_users.at(i)->allocate_memory();
         int offset = compute_batch_offset(i);
-        list_of_users.at(i)->copy_to_device(host_Mat + offset, host_Vect);
+        list_of_users.at(i)->set_device(i,"Data Copy");
+        list_of_users.at(i)->copy_to_device(host_Mat + offset*dimension, host_Vect);
     }
 }
 
 float gpu_manager::compute_and_store(double* host_ResVect) {
     float time_sec = 0.;
-    std::cout << "Computing data for all GPUs" << std::endl;
+    std::cout << "===========================Computing data for all GPUs=================================" << std::endl;
     for(int i=0; i<list_of_users.size(); i++) {
         list_of_users.at(i)->set_device(i, "Compute and Store");
         list_of_users.at(i)->start_event();
@@ -57,6 +56,7 @@ int gpu_manager::compute_batch_offset(int batch_id){
 }
 
 void gpu_manager::_free() {
+    std::cout << "========================Freeing data for all GPUs======================================" << std::endl;
     for(int i=0; i<list_of_users.size(); i++) {
         list_of_users.at(i)->set_device(i, "Free Memory");
         list_of_users.at(i)->_free();

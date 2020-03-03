@@ -7,8 +7,8 @@
 #include <string>
 
 /*mem error*/
-void mem_error(std::string arrayname, std::string benchmark, int len, std::string type);
-void print_on_screen(std::string program_name,float tsec,double gflops,int size,int flag);
+void mem_error(const std::string& arrayname, const std::string& benchmark, int len, const std::string& type);
+void print_on_screen(const std::string& program_name,float tsec,double gflops,int size,int flag);
 void fill_with_random_doubles(double* vec, int size);
 void relative_error(double* dRes, double* hRes, int size);
 double calculate_gflops(float &Tsec, int size);

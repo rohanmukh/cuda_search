@@ -11,14 +11,14 @@
 
 
 /*mem error*/
-void mem_error(std::string arrayname, std::string benchmark, int len, std::string type)
+void mem_error(const std::string& arrayname, const std::string& benchmark, int len, const std::string& type)
 {
     printf("\nMemory not sufficient to allocate for array %s\n\tBenchmark : %s  \n\tMemory requested = %d number of %s elements\n",arrayname.c_str(), benchmark.c_str(), len, type.c_str());
     exit(-1);
 }
 
 /*prints the result in screen*/
-void print_on_screen(std::string program_name,float tsec,double gflops,int size, int flag)//flag=1 if gflops has been calculated else flag =0
+void print_on_screen(const std::string& program_name,float tsec,double gflops,int size, int flag)//flag=1 if gflops has been calculated else flag =0
 {
     printf("\n---------------%s----------------\n",program_name.c_str());
     printf("\tSIZE\t TIME_SEC\t Gflops\n");
@@ -32,7 +32,7 @@ void print_on_screen(std::string program_name,float tsec,double gflops,int size,
 /*calculate Gflops*/
 double calculate_gflops(float &Tsec, int size)
 {
-    float gflops=(1.0e-9 * (( 2.0 * size )/Tsec));
+    double gflops=(1.0e-9 * (( 2.0 * size )/Tsec));
     return gflops;
 }
 
@@ -48,7 +48,7 @@ void fill_with_random_doubles(double* vec, int size)
 /* function to calculate relative error*/
 void relative_error(double* dRes, double* hRes, int size)
 {
-    double relativeError=0.0,errorNorm=0.0;
+    double relativeError,errorNorm=0.0;
     int flag=0;
     int i;
 
@@ -66,16 +66,19 @@ void relative_error(double* dRes, double* hRes, int size)
                 flag=1;
             }
         }
+    }
+    if( flag == 1){
+        printf("\n ----------------------------------------------------------------------\n");
+        printf(" \n--------------------Results verification : Failed------------------------");
+        printf(" \n------------------Considered machine precision : %e-------------------", EPS);
+        printf(" \n--------------------Relative Error : %e------------------------------\n", errorNorm);
+        printf("\n ----------------------------------------------------------------------\n");
+    }
+    else{
+        printf("\n ----------------------------------------------------------------------");
+        printf("\n ------------------Results verification : Success--------------------------");
+        printf("\n ----------------------------------------------------------------------\n\n");
 
     }
-    if( flag == 1)
-    {
-        printf(" \nResults verfication : Failed");
-        printf(" \nConsidered machine precision : %e", EPS);
-        printf(" \nRelative Error                  : %e\n", errorNorm);
-
-    }
-    else
-        printf("\nResults verfication : Success\n");
 
 }

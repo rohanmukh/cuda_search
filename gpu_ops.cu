@@ -86,11 +86,12 @@ float gpu_ops::stop_event() {
     return Tsec;
 }
 
-gpu_ops::gpu_ops(int device_id, int matRowSize, int matColSize) {
+gpu_ops::gpu_ops(int device_id, int batch_size, int dimension) {
     this->device_id = device_id;
-    this->batch_size = matRowSize;
-    this->dimension = matColSize;
+    this->batch_size = batch_size;
+    this->dimension = dimension;
     set_device(device_id, "Initialization");
     get_device_property();
+    allocate_memory();
 }
 

@@ -60,7 +60,6 @@ int main()
     host_system->_free();
     manager->_free();
     cpu_user->_free();
-    printf("\n ----------------------------------------------------------------------\n");
 
     return 0;
 }// end of main
