@@ -150,32 +150,32 @@ cuda_utils.cpp.s:
 	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/cuda_utils.cpp.s
 .PHONY : cuda_utils.cpp.s
 
-gpu_ops.o: gpu_ops.cpp.o
+host_ops.o: host_ops.cpp.o
 
-.PHONY : gpu_ops.o
+.PHONY : host_ops.o
 
 # target to build an object file
-gpu_ops.cpp.o:
-	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/gpu_ops.cpp.o
-.PHONY : gpu_ops.cpp.o
+host_ops.cpp.o:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/host_ops.cpp.o
+.PHONY : host_ops.cpp.o
 
-gpu_ops.i: gpu_ops.cpp.i
+host_ops.i: host_ops.cpp.i
 
-.PHONY : gpu_ops.i
+.PHONY : host_ops.i
 
 # target to preprocess a source file
-gpu_ops.cpp.i:
-	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/gpu_ops.cpp.i
-.PHONY : gpu_ops.cpp.i
+host_ops.cpp.i:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/host_ops.cpp.i
+.PHONY : host_ops.cpp.i
 
-gpu_ops.s: gpu_ops.cpp.s
+host_ops.s: host_ops.cpp.s
 
-.PHONY : gpu_ops.s
+.PHONY : host_ops.s
 
 # target to generate assembly for a file
-gpu_ops.cpp.s:
-	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/gpu_ops.cpp.s
-.PHONY : gpu_ops.cpp.s
+host_ops.cpp.s:
+	$(MAKE) -f CMakeFiles/cuda_code_search.dir/build.make CMakeFiles/cuda_code_search.dir/host_ops.cpp.s
+.PHONY : host_ops.cpp.s
 
 serial_code.o: serial_code.cpp.o
 
@@ -243,9 +243,9 @@ help:
 	@echo "... cuda_utils.o"
 	@echo "... cuda_utils.i"
 	@echo "... cuda_utils.s"
-	@echo "... gpu_ops.o"
-	@echo "... gpu_ops.i"
-	@echo "... gpu_ops.s"
+	@echo "... host_ops.o"
+	@echo "... host_ops.i"
+	@echo "... host_ops.s"
 	@echo "... serial_code.o"
 	@echo "... serial_code.i"
 	@echo "... serial_code.s"

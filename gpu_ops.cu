@@ -33,35 +33,16 @@ void MatVectMultiplication(const double *_device_Mat, const double *_device_Vect
 
 }//end of MatVect device function
 
-
-
-gpu_ops::gpu_ops(int matRowSize, int matColSize, double *host_Mat,
-                         double *host_Vect, int vlength, int size) {
+gpu_ops::gpu_ops(int matRowSize, int matColSize, int vlength) {
     this->matRowSize = matRowSize;
     this->matColSize = matColSize;
-    this->host_Mat = host_Mat;
-    this->host_Vect = host_Vect;
     this->vlength = vlength;
-    this->size = size;
 }
 
 
-void gpu_ops::allocate_memory() {
-    //allocating memory on GPU
-    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Mat, matRowSize*matColSize* sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Vect, vlength* sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_ResVect, matRowSize* sizeof(double)));
-}
-
-
-void gpu_ops::copy_to_device() {
-    //moving data from CPU to GPU
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Mat, (void*)host_Mat, matRowSize*matColSize*sizeof(double) ,cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Vect, (void*)host_Vect,vlength*sizeof(double),cudaMemcpyHostToDevice));
-}
-
-void gpu_ops::launch_kernel(cudaDeviceProp deviceProp) {
-    // Launching kernell..........
+/*function to launch kernel*/
+void gpu_ops::launch_kernel() {
+    // Launching kernel..........
 
     /* threads_per_block, blocks_per_grid  */
     int max=BLOCKSIZE*BLOCKSIZE;
@@ -76,15 +57,41 @@ void gpu_ops::launch_kernel(cudaDeviceProp deviceProp) {
 }
 
 
-void gpu_ops::get_data_to_host(double *host_ResVect) {
-    //retriving result from device
-    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResVect,matRowSize*sizeof(double),cudaMemcpyDeviceToHost));
+void gpu_ops::set_device(int device_id) {
+    // Device Selection, Device 1: Tesla C1060
+    cudaSetDevice(device_id);
+
+    int device;
+    // Current Device Detection
+    cudaGetDevice(&device);
+    cudaGetDeviceProperties(&deviceProp,device);
+    printf("Using device %d: %s \n", device, deviceProp.name);
 
 }
 
 
 
+void gpu_ops::allocate_memory() {
+    //allocating memory on GPU
+    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Mat, matRowSize*matColSize* sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Vect, vlength* sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_ResVect, matRowSize* sizeof(double)));
+}
 
+
+void gpu_ops::copy_to_device(double* host_Mat, double* host_Vect) {
+    //moving data from CPU to GPU
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Mat, (void*)host_Mat, matRowSize*matColSize*sizeof(double) ,cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Vect, (void*)host_Vect,vlength*sizeof(double),cudaMemcpyHostToDevice));
+}
+
+
+
+void gpu_ops::copy_to_host(double *host_ResVect) {
+    //retriving result from device
+    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResVect,matRowSize*sizeof(double),cudaMemcpyDeviceToHost));
+
+}
 
 void gpu_ops::_free() {
     /*free the memory from GPU */
@@ -92,4 +99,20 @@ void gpu_ops::_free() {
     CUDA_SAFE_CALL(cudaFree(device_Vect));
     CUDA_SAFE_CALL(cudaFree(device_ResVect));
     printf("mem freed\n");
+}
+
+
+void gpu_ops::start_event() {
+    //event creation...
+    CUDA_SAFE_CALL(cudaEventCreate (&start));
+    CUDA_SAFE_CALL(cudaEventRecord (start, 0));
+    CUDA_SAFE_CALL(cudaEventCreate (&stop));
+}
+
+float gpu_ops::stop_event() {
+    CUDA_SAFE_CALL(cudaEventRecord (stop, 0));
+    CUDA_SAFE_CALL(cudaEventSynchronize (stop));
+    CUDA_SAFE_CALL(cudaEventElapsedTime ( &elapsedTime, start, stop));
+    float Tsec= 1.0e-3*elapsedTime; // time in seconds
+    return Tsec;
 }

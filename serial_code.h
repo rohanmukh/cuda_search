@@ -16,7 +16,7 @@ class serial_code {
     public:
     serial_code(int, int, double*, double*, int, int);
 
-    void CPU_MatVect();
+    void CPU_MatVectMult();
     double *get_result();
     void _free();
 };

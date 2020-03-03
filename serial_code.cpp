@@ -18,7 +18,7 @@ serial_code::serial_code(int matRowSize, int matColSize, double *host_Mat,
 }
 
 /*sequential function for mat vect multiplication*/\
-void serial_code::CPU_MatVect() {
+void serial_code::CPU_MatVectMult() {
     cpu_ResVect = (double *) malloc(matRowSize * sizeof(double));
     if (cpu_ResVect == NULL)
         mem_error("cpu_ResVect", "vectmatmul", size, "double");

@@ -12,20 +12,36 @@
 
 class gpu_ops {
 private:
-    int matRowSize, matColSize, vlength, size;
-    double *host_Mat, *host_Vect;
-    double *device_Mat,*device_Vect,*device_ResVect;
-    /*function to launch kernel*/
+
+    // size of the data
+    int matRowSize, matColSize, vlength;
+
+    // data
+    double *device_Mat,*device_Vect, *device_ResVect;
+
+    // device
+    cudaDeviceProp deviceProp;
+
+    // timers
+    cudaEvent_t start, stop; float elapsedTime;
+
 
 public:
-    gpu_ops(int, int, double*, double*, int, int);
-//    void MatVectMultiplication(const double *_device_Mat, const double *_device_Vect, int _matRowSize, int _vlength, double *_device_ResVect);
+    gpu_ops(int, int, int);
 
+    //data
     void allocate_memory();
-    void copy_to_device();
-    void launch_kernel(cudaDeviceProp);
-    void get_data_to_host(double*);
+    void copy_to_device(double*, double*);
+    void copy_to_host(double*);
     void _free();
+
+    // device
+    void set_device(int);
+    void launch_kernel();
+
+    //timers
+    void start_event();
+    float stop_event();
 };
 
 
