@@ -6,15 +6,14 @@
 #define CUDA_CODE_SEARCH_GPU_MANAGER_H
 
 #include <vector>
+#include <string>
 #include "gpu_ops.h"
 
 class gpu_manager {
     std::vector<gpu_ops*> list_of_users;
 
 public:
-    gpu_manager(){
-    }
-
+    gpu_manager();
     void add_user(int, int, int, int);
     static int get_device_count();
     void copy_data(double*, double*);

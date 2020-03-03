@@ -7,6 +7,7 @@
 
 #include <cuda_runtime_api.h>
 #include <cuda.h>
+#include <string>
 #include "cuda_utils.h"
 #include "utils.h"
 
@@ -36,8 +37,8 @@ public:
     void _free();
 
     // device
-    void set_device(int);
     void launch_kernel();
+    void set_device(int, std::string);
 
     //timers
     void start_event();

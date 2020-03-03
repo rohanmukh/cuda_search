@@ -57,7 +57,8 @@ void gpu_ops::launch_kernel() {
 }
 
 
-void gpu_ops::set_device(int device_id) {
+
+void gpu_ops::set_device(int device_id, std::string message="") {
     // Device Selection, Device 1: Tesla C1060
     cudaSetDevice(device_id);
 
@@ -68,7 +69,6 @@ void gpu_ops::set_device(int device_id) {
     printf("Using device %d: %s \n", device, deviceProp.name);
 
 }
-
 
 
 void gpu_ops::allocate_memory() {

@@ -37,7 +37,7 @@ int main()
 {
     // Vector length , Matrix Row and Col sizes..............
     vlength = matColSize = SIZE;
-    matRowSize = SIZE;
+    matRowSize = SIZE*1;
 
     host_ops *host_system = new host_ops(matRowSize, matColSize, vlength);
     host_system->fill_with_random_data();
