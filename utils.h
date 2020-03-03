@@ -8,9 +8,9 @@
 
 /*mem error*/
 void mem_error(const std::string& arrayname, const std::string& benchmark, long len, const std::string& type);
-void print_on_screen(const std::string& program_name,float tsec,double gflops,int size,int flag);
+void print_on_screen(const std::string& program_name,float tsec,double gflops,long size,int flag);
 void fill_with_random_doubles(double* vec, long size);
-void relative_error(double* dRes, double* hRes, int size);
-double calculate_gflops(float &Tsec, int size);
+void relative_error(double* dRes, double* hRes, long size);
+double calculate_gflops(float &Tsec, long size);
 
 #endif //CUDA_CODE_SEARCH_UTILS_H

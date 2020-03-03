@@ -47,7 +47,8 @@ int main()
 
 
     // calling funtion for measuring Gflops & printing the result on screen
-    print_on_screen("MAT VECT MULTIPLICATION",time_sec, calculate_gflops(time_sec, data_size*dimension), data_size*dimension,1);
+    double gfops = calculate_gflops(time_sec, data_size*dimension);
+    print_on_screen("MAT VECT MULTIPLICATION",time_sec, gfops, data_size*dimension,1);
 
 
     // CPU calculation..and checking error deviation....

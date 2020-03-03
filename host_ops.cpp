@@ -12,9 +12,10 @@ host_ops::host_ops(long batch_size, int dimension) {
     this->batch_size = batch_size;
 
     /*allocating the memory for each matrix */
-    host_Mat =new double[batch_size * dimension];
-    host_Vect = new double[dimension];
-    host_ResVect = new double[batch_size];
+
+    host_Mat = (double*)malloc(batch_size * dimension * sizeof(double)); //new double[batch_size * dimension];
+    host_Vect = (double*)malloc(dimension * sizeof(double)); //new double[dimension];
+    host_ResVect = (double*)malloc(batch_size * sizeof(double)); // new double[batch_size];
 
     // ---------------checking host memory  for error..............................
     if(host_Mat==NULL)
