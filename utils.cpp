@@ -6,25 +6,26 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+
 #define EPS 1.0e-15
 
 
 /*mem error*/
-void mem_error(char *arrayname, char *benchmark, int len, char *type)
+void mem_error(std::string arrayname, std::string benchmark, int len, std::string type)
 {
-    printf("\nMemory not sufficient to allocate for array %s\n\tBenchmark : %s  \n\tMemory requested = %d number of %s elements\n",arrayname, benchmark, len, type);
+    printf("\nMemory not sufficient to allocate for array %s\n\tBenchmark : %s  \n\tMemory requested = %d number of %s elements\n",arrayname.c_str(), benchmark.c_str(), len, type.c_str());
     exit(-1);
 }
 
 /*prints the result in screen*/
-void print_on_screen(char * program_name,float tsec,double gflops,int size,int flag)//flag=1 if gflops has been calculated else flag =0
+void print_on_screen(std::string program_name,float tsec,double gflops,int size,int flag)//flag=1 if gflops has been calculated else flag =0
 {
-    printf("\n---------------%s----------------\n",program_name);
+    printf("\n---------------%s----------------\n",program_name.c_str());
     printf("\tSIZE\t TIME_SEC\t Gflops\n");
     if(flag==1)
         printf("\t%d\t%f\t%lf\t",size,tsec,gflops);
     else
-        printf("\t%d\t%lf\t%lf\t",size,"---","---");
+        printf("\t%d\t%s\t%s\t",size,"---","---");
 
 }
 
