@@ -11,7 +11,7 @@
 
 
 /*mem error*/
-void mem_error(const std::string& arrayname, const std::string& benchmark, int len, const std::string& type)
+void mem_error(const std::string& arrayname, const std::string& benchmark, long len, const std::string& type)
 {
     printf("\nMemory not sufficient to allocate for array %s\n\tBenchmark : %s  \n\tMemory requested = %d number of %s elements\n",arrayname.c_str(), benchmark.c_str(), len, type.c_str());
     exit(-1);
@@ -38,7 +38,7 @@ double calculate_gflops(float &Tsec, int size)
 
 
 /*Fill in the vector with double precision values */
-void fill_with_random_doubles(double* vec, int size)
+void fill_with_random_doubles(double* vec, long size)
 {
     int ind;
     for(ind=0;ind<size;ind++)

@@ -86,7 +86,7 @@ float gpu_ops::stop_event() {
     return Tsec;
 }
 
-gpu_ops::gpu_ops(int device_id, int batch_size, int dimension) {
+gpu_ops::gpu_ops(int device_id, long batch_size, int dimension) {
     this->device_id = device_id;
     this->batch_size = batch_size;
     this->dimension = dimension;

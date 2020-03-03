@@ -6,7 +6,7 @@
 #include "utils.h"
 #include <cstdlib>
 
-host_ops::host_ops(int batch_size, int dimension) {
+host_ops::host_ops(long batch_size, int dimension) {
 
     this->dimension = dimension;
     this->batch_size = batch_size;

@@ -7,13 +7,14 @@
 
 
 class host_ops {
-    int batch_size, dimension;
+    long batch_size;
+    int dimension;
 
 public:
     double *host_Mat, *host_Vect, *host_ResVect;
 
 public:
-    host_ops(int, int);
+    host_ops(long, int);
     void fill_with_random_data();
     void _free();
     double* get_host_vector();

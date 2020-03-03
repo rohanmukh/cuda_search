@@ -7,7 +7,7 @@
 #include "utils.h"
 
 
-serial_code::serial_code(int batch_size, int dimension, double *host_Mat,
+serial_code::serial_code(long batch_size, int dimension, double *host_Mat,
                          double *host_Vect) {
     this->batch_size = batch_size;
     this->dimension = dimension;

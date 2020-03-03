@@ -34,7 +34,7 @@ int main()
 {
     // Vector length , Matrix Row and Col sizes..............
     int dimension = DIMENSION;
-    int data_size = DATA_SIZE;
+    long data_size = DATA_SIZE;
 
     std::cout << "Initializing Host" << std::endl;
     host_ops *host_system = new host_ops(data_size, dimension);

@@ -15,7 +15,8 @@ class gpu_ops {
 private:
 
     // size of the data
-    int batch_size, dimension;
+    long batch_size;
+    int dimension;
 
     // data
     double *device_Mat, *device_Vect, *device_ResVect;
@@ -29,7 +30,7 @@ private:
 
 
 public:
-    gpu_ops(int, int, int);
+    gpu_ops(int, long, int);
 
     //data
     void allocate_memory();

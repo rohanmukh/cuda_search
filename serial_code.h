@@ -8,13 +8,14 @@
 
 class serial_code {
     private:
-        int batch_size, dimension;
+        long batch_size;
+        int dimension;
         double *host_Mat, *host_Vect;
         double *cpu_ResVect;
 
 
     public:
-    serial_code(int, int, double*, double*);
+    serial_code(long, int, double*, double*);
 
     void CPU_MatVectMult();
     double *get_result();
