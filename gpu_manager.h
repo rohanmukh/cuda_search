@@ -17,6 +17,7 @@ class gpu_manager {
 public:
     gpu_manager(int, int);
     void add_user(int);
+    int compute_batch_offset(int);
     void copy_data(double*, double*);
     float compute_and_store(double*);
     void _free();

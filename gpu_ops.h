@@ -39,7 +39,7 @@ public:
 
     // device
     void launch_kernel();
-    void set_device(int, std::string);
+    void set_device(int, const std::string&);
     void get_device_property();
 
     //timers

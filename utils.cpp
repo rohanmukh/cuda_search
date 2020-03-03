@@ -70,12 +70,12 @@ void relative_error(double* dRes, double* hRes, int size)
     }
     if( flag == 1)
     {
-        printf(" \n Results verfication : Failed");
-        printf(" \n Considered machine precision : %e", EPS);
-        printf(" \n Relative Error                  : %e\n", errorNorm);
+        printf(" \nResults verfication : Failed");
+        printf(" \nConsidered machine precision : %e", EPS);
+        printf(" \nRelative Error                  : %e\n", errorNorm);
 
     }
     else
-        printf("\n Results verfication : Success\n");
+        printf("\nResults verfication : Success\n");
 
 }

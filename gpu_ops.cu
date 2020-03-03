@@ -4,6 +4,7 @@
 
 #include "gpu_ops.h"
 #include <cstdio>
+#include <iostream>
 #include "matrix_vector_op.cu"
 
 /*function to launch kernel*/
@@ -33,9 +34,10 @@ void gpu_ops::get_device_property() {
 
 }
 
-void gpu_ops::set_device(int device_id, std::string message="") {
+void gpu_ops::set_device(int _device_id, const std::string& message="") {
     // Device Selection, Device 1: Tesla C1060
-    cudaSetDevice(device_id);
+    std::cout << "Setting Device :: " << _device_id << " for " << message << std::endl;
+    cudaSetDevice(_device_id);
 }
 
 
@@ -88,7 +90,7 @@ gpu_ops::gpu_ops(int device_id, int matRowSize, int matColSize) {
     this->device_id = device_id;
     this->batch_size = matRowSize;
     this->dimension = matColSize;
-    set_device(device_id);
+    set_device(device_id, "Initialization");
     get_device_property();
 }
 
