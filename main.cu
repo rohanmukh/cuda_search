@@ -25,7 +25,7 @@
 #include "gpu_manager.h"
 #include "host_ops.h"
 
-#define DATA_SIZE 1024000
+#define DATA_SIZE 1024
 #define DIMENSION 256
 
 

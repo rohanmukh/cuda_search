@@ -13,9 +13,8 @@ host_ops::host_ops(int batch_size, int dimension) {
 
     /*allocating the memory for each matrix */
     host_Mat =new double[batch_size * dimension];
-    host_Vect = new double[batch_size];
+    host_Vect = new double[dimension];
     host_ResVect = new double[batch_size];
-
 
     // ---------------checking host memory  for error..............................
     if(host_Mat==NULL)
@@ -32,7 +31,7 @@ host_ops::host_ops(int batch_size, int dimension) {
 void host_ops::fill_with_random_data() {
     //--------------Initializing the input arrays..............
     fill_with_random_doubles(host_Mat, batch_size * dimension);
-    fill_with_random_doubles(host_Vect, batch_size);
+    fill_with_random_doubles(host_Vect, dimension);
 }
 
 double *host_ops::get_result_vector(){
