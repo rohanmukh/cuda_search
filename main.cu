@@ -51,6 +51,9 @@ int main()
     // CPU calculation..and checking error deviation....
     serial_code *cpu_user = new serial_code(data_size, dimension, host_system->host_Mat, host_system->host_Vect);
     cpu_user->CPU_MatVectMult();
+
+
+    printf("\n ----------------------------------------------------------------------\n");
     relative_error(cpu_user->get_result(), host_system->host_ResVect, data_size);
 
     // Free Memory

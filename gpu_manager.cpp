@@ -3,16 +3,20 @@
 //
 
 #include "gpu_manager.h"
-#include <cuda_runtime_api.h>
+#include "cuda_utils.h"
+#include <cassert>
 
 /*Get the number of GPU devices present on the host */
 gpu_manager::gpu_manager(int batch_size, int dimension){
     this->batch_size = batch_size;
     this->dimension = dimension;
-    cudaGetDeviceCount(&this->num_devices);
 
+    // get number of devices
+
+    this->num_devices = get_DeviceCount();
+
+    assert(batch_size % this->num_devices == 0);
     batch_matRowSize = batch_size / this->num_devices;
-    // ASSERT TODO
 
     for(int i=0; i<this->num_devices; i++)
         this->list_of_users.push_back(new gpu_ops(i, batch_matRowSize, dimension));

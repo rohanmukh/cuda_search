@@ -39,7 +39,7 @@ void CUDA_SAFE_CALL(cudaError_t call)
         {
             printf(" ERROR at line :%i.%d' ' %s\n",__LINE__,ret,cudaGetErrorString(ret));
             exit(-1);
-            break;
+//            break;
         }
     }
 }
@@ -62,3 +62,8 @@ void check_block_grid_dim(cudaDeviceProp devProp,dim3 blockDim,dim3 gridDim)
     }
 }
 
+int get_DeviceCount(){
+    int num_devices;
+    cudaGetDeviceCount(&num_devices);
+    return num_devices;
+}
