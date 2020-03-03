@@ -13,7 +13,7 @@
 /*mem error*/
 void mem_error(const std::string& arrayname, const std::string& benchmark, long len, const std::string& type)
 {
-    printf("\nMemory not sufficient to allocate for array %s\n\tBenchmark : %s  \n\tMemory requested = %d number of %s elements\n",arrayname.c_str(), benchmark.c_str(), len, type.c_str());
+    printf("\nMemory not sufficient to allocate for array %s\n\tBenchmark : %s  \n\tMemory requested = %ld number of %s elements\n",arrayname.c_str(), benchmark.c_str(), len, type.c_str());
     exit(-1);
 }
 
@@ -23,9 +23,9 @@ void print_on_screen(const std::string& program_name,float tsec,double gflops,lo
     printf("\n---------------%s----------------\n",program_name.c_str());
     printf("\tSIZE\t TIME_SEC\t Gflops\n");
     if(flag==1)
-        printf("\t%d\t%f\t%lf\t",size,tsec,gflops);
+        printf("\t%ld\t%f\t%lf\t",size,tsec,gflops);
     else
-        printf("\t%d\t%s\t%s\t",size,"---","---");
+        printf("\t%ld\t%s\t%s\t",size,"---","---");
 
 }
 
@@ -46,7 +46,7 @@ void fill_with_random_doubles(double* vec, long size)
 }
 
 /* function to calculate relative error*/
-void relative_error(double* dRes, double* hRes, int size)
+void relative_error(double* dRes, double* hRes, long size)
 {
     double relativeError,errorNorm=0.0;
     int flag=0;
