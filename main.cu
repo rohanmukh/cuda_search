@@ -43,8 +43,7 @@ int main()
     host_system->fill_with_random_data();
 
 
-    gpu_manager* manager = new gpu_manager();
-    manager->add_user(0, matRowSize, matColSize, vlength);
+    gpu_manager* manager = new gpu_manager(matRowSize, matColSize, vlength);
     manager->copy_data(host_system->host_Mat, host_system->host_Vect);
     float time_sec = manager->compute_and_store(host_system->host_ResVect);
 
