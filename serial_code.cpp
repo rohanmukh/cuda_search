@@ -8,19 +8,18 @@
 
 
 serial_code::serial_code(int batch_size, int dimension, double *host_Mat,
-                         double *host_Vect, int size) {
+                         double *host_Vect) {
     this->batch_size = batch_size;
     this->dimension = dimension;
     this->host_Mat = host_Mat;
     this->host_Vect = host_Vect;
-    this->size = size;
 }
 
 /*sequential function for mat vect multiplication*/\
 void serial_code::CPU_MatVectMult() {
     cpu_ResVect = (double *) malloc(batch_size * sizeof(double));
     if (cpu_ResVect == NULL)
-        mem_error("cpu_ResVect", "vectmatmul", size, "double");
+        mem_error("cpu_ResVect", "vectmatmul", batch_size, "double");
 
     int i, j;
     for (i = 0; i < batch_size; i++) {

@@ -66,7 +66,6 @@ void gpu_ops::_free() {
     CUDA_SAFE_CALL(cudaFree(device_Mat));
     CUDA_SAFE_CALL(cudaFree(device_Vect));
     CUDA_SAFE_CALL(cudaFree(device_ResVect));
-    printf("mem freed\n");
 }
 
 
