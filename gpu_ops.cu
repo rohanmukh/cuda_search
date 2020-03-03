@@ -33,11 +33,6 @@ void MatVectMultiplication(const double *_device_Mat, const double *_device_Vect
 
 }//end of MatVect device function
 
-gpu_ops::gpu_ops(int matRowSize, int matColSize, int vlength) {
-    this->matRowSize = matRowSize;
-    this->matColSize = matColSize;
-    this->vlength = vlength;
-}
 
 
 /*function to launch kernel*/
@@ -57,10 +52,7 @@ void gpu_ops::launch_kernel() {
 }
 
 
-
-void gpu_ops::set_device(int device_id, std::string message="") {
-    // Device Selection, Device 1: Tesla C1060
-    cudaSetDevice(device_id);
+void gpu_ops::get_device_property() {
 
     int device;
     // Current Device Detection
@@ -68,6 +60,11 @@ void gpu_ops::set_device(int device_id, std::string message="") {
     cudaGetDeviceProperties(&deviceProp,device);
     printf("Using device %d: %s \n", device, deviceProp.name);
 
+}
+
+void gpu_ops::set_device(int device_id, std::string message="") {
+    // Device Selection, Device 1: Tesla C1060
+    cudaSetDevice(device_id);
 }
 
 
@@ -116,3 +113,13 @@ float gpu_ops::stop_event() {
     float Tsec= 1.0e-3*elapsedTime; // time in seconds
     return Tsec;
 }
+
+gpu_ops::gpu_ops(int device_id, int matRowSize, int matColSize, int vlength) {
+    this->device_id = device_id;
+    this->matRowSize = matRowSize;
+    this->matColSize = matColSize;
+    this->vlength = vlength;
+    set_device(device_id);
+    get_device_property();
+}
+

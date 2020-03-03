@@ -21,6 +21,7 @@ private:
     double *device_Mat,*device_Vect, *device_ResVect;
 
     // device
+    int device_id;
     cudaDeviceProp deviceProp;
 
     // timers
@@ -28,7 +29,7 @@ private:
 
 
 public:
-    gpu_ops(int, int, int);
+    gpu_ops(int, int, int, int);
 
     //data
     void allocate_memory();
@@ -39,6 +40,7 @@ public:
     // device
     void launch_kernel();
     void set_device(int, std::string);
+    void get_device_property();
 
     //timers
     void start_event();

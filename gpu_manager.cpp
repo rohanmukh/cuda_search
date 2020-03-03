@@ -21,7 +21,7 @@ gpu_manager::gpu_manager(){
 
 
 void gpu_manager::add_user(int device_id, int matRowSize, int matColSize, int vlength){
-    gpu_ops *gpu_user = new gpu_ops(matRowSize, matColSize, vlength);
+    gpu_ops *gpu_user = new gpu_ops(device_id, matRowSize, matColSize, vlength);
     list_of_users.at(device_id) = gpu_user;
 }
 
