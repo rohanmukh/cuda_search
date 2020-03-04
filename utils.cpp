@@ -2,11 +2,11 @@
 // Created by rm38 on 3/2/20.
 //
 
-#include "utils.h"
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
-
+#include <iostream>
+#include "utils.h"
 #define EPS 1.0e-15
 
 /*mem error*/
@@ -25,13 +25,14 @@ void print_on_screen(const std::string& program_name,float tsec,double gflops,lo
         printf("\t%ld\t%f\t%lf\t",size,tsec,gflops);
     else
         printf("\t%ld\t%s\t%s\t",size,"---","---");
-
+    printf("\n ----------------------------------------------------------------------\n");
 }
 
 /*calculate Gflops*/
 double calculate_gflops(float &Tsec, long size)
 {
     double gflops=(1.0e-9 * (( 2.0 * size )/Tsec));
+    print_on_screen("MAT VECT MULTIPLICATION", Tsec, gflops, size, 1);
     return gflops;
 }
 
@@ -72,6 +73,7 @@ void relative_error(double* dRes, double* hRes, long size)
             }
         }
     }
+    std::cout << "===========================Relative Error==================================" << std::endl;
     if( flag == 1){
         printf("\n ----------------------------------------------------------------------\n");
         printf(" \n--------------------Results verification : Failed------------------------");

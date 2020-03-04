@@ -2,14 +2,14 @@
 // Created by rm38 on 3/2/20.
 //
 
-#include "serial_code.h"
+#include "cpu_manager.h"
 #include <cuda.h>
 #include "utils.h"
 #include <cmath>
 #include <chrono>
 #include <iostream>
 
-serial_code::serial_code(long batch_size, int dimension, double *host_database_B,
+cpu_manager::cpu_manager(long batch_size, int dimension, double *host_database_B,
                          double *host_database_A, double *host_database_probY, double *host_input_B, double* host_input_A) {
     this->batch_size = batch_size;
     this->dimension = dimension;
@@ -24,7 +24,8 @@ serial_code::serial_code(long batch_size, int dimension, double *host_database_B
 }
 
 /*sequential function for mat vect multiplication*/\
-double serial_code::CPU_MatVectMult() {
+void cpu_manager::search() {
+    std::cout << "===========================CPU Calculation==================================" << std::endl;
     auto start = std::chrono::steady_clock::now();
     for (int k = 0; k < batch_size; k++) {
         int offset = k * dimension;
@@ -45,15 +46,15 @@ double serial_code::CPU_MatVectMult() {
     }
     auto stop = std::chrono::steady_clock::now();
     double time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count();
-    return 1.0e-9 * time;
+    std::cout << "Time elapsed :: " << time << std::endl;
 }
 
-double *serial_code::get_result() {
+double *cpu_manager::get_result() {
     return this->cpu_ResVect;
 }
 
 
-void serial_code::_free(){
+void cpu_manager::_free(){
     free(this->cpu_ResVect);
 }
 

@@ -20,10 +20,12 @@
 
 #include<cstdio>
 #include <iostream>
-#include "serial_code.h"
+#include "cpu_manager.h"
 #include "utils.h"
 #include "gpu_manager.h"
-#include "host_ops.h"
+#include "host_database.h"
+#include "query_holder.h"
+
 
 #define DATA_SIZE 1024
 #define DIMENSION 256
@@ -37,38 +39,37 @@ int main()
     long data_size = DATA_SIZE;
 
     std::cout << "Initializing Host" << std::endl;
-    auto *host_system = new host_ops(data_size, dimension);
-    host_system->fill_database();
-    host_system->fill_input_query();
+    auto *host_db = new host_database(data_size, dimension);
+    host_db->fill_database();
+
+    auto *query = new query_holder(dimension);
+    query->fill_input_query();
 
     std::cout << "Initializing GPU Manager" << std::endl;
-    auto* manager = new gpu_manager(data_size, dimension);
-    manager->copy_data_to_database(host_system->host_database_B, host_system->host_database_A, host_system->host_database_prob_Y);
-    manager->copy_input_to_device(host_system->host_input_B, host_system->host_input_A);
-    float time_sec = manager->compute_and_store(host_system->host_ResVect);
+    auto* gpu_user = new gpu_manager(data_size, dimension);
+    gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
+                                      host_db->host_database_prob_Y
+                                      );
+    gpu_user->copy_input_to_device(query->host_input_B, query->host_input_A);
+    float gpu_time = gpu_user->compute_and_store(host_db->host_ResVect);
 
 
     // calling funtion for measuring Gflops & printing the result on screen
-    double gfops = calculate_gflops(time_sec, data_size*dimension);
-    print_on_screen("MAT VECT MULTIPLICATION",time_sec, gfops, data_size*dimension,1);
+    calculate_gflops(gpu_time, data_size * dimension);
 
-    printf("\n ----------------------------------------------------------------------\n");
     // CPU calculation..and checking error deviation....
-    std::cout << "===========================CPU Calculation==================================" << std::endl;
-    auto *cpu_user = new serial_code(
-            data_size, dimension, host_system->host_database_B,
-            host_system->host_database_A, host_system->host_database_prob_Y,
-            host_system->host_input_B, host_system->host_input_A
+    auto *cpu_user = new cpu_manager(
+            data_size, dimension, host_db->host_database_B,
+            host_db->host_database_A, host_db->host_database_prob_Y,
+            query->host_input_B, query->host_input_A
             );
-    double elapsed_time = cpu_user->CPU_MatVectMult();
-    std::cout << "Time elapsed :: " << elapsed_time << std::endl;
+    cpu_user->search();
 
-    std::cout << "===========================Relative Error==================================" << std::endl;
-    relative_error(cpu_user->get_result(), host_system->host_ResVect, data_size);
+    relative_error(cpu_user->get_result(), host_db->host_ResVect, data_size);
 
     // Free Memory
-    host_system->_free();
-    manager->_free();
+    host_db->_free();
+    gpu_user->_free();
     cpu_user->_free();
 
     return 0;

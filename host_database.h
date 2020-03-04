@@ -2,22 +2,21 @@
 // Created by rm38 on 3/2/20.
 //
 
-#ifndef CUDA_CODE_SEARCH_HOST_OPS_H
-#define CUDA_CODE_SEARCH_HOST_OPS_H
+#ifndef CUDA_CODE_SEARCH_HOST_DATABASE_H
+#define CUDA_CODE_SEARCH_HOST_DATABASE_H
 
 
-class host_ops {
+class host_database {
     long batch_size;
     int dimension;
 
 public:
     double *host_database_B, *host_database_A, *host_database_prob_Y;
-    double *host_input_B, *host_input_A, *host_ResVect;
+    double *host_ResVect;
 
 public:
-    host_ops(long, int);
+    host_database(long, int);
     void fill_database();
-    void fill_input_query();
     void _free();
     double* get_host_vector();
     double* get_host_matrix();
@@ -26,4 +25,4 @@ public:
 };
 
 
-#endif //CUDA_CODE_SEARCH_HOST_OPS_H
+#endif //CUDA_CODE_SEARCH_HOST_DATABASE_H

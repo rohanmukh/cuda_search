@@ -2,11 +2,11 @@
 // Created by rm38 on 3/2/20.
 //
 
-#ifndef CUDA_CODE_SEARCH_SERIAL_CODE_H
-#define CUDA_CODE_SEARCH_SERIAL_CODE_H
+#ifndef CUDA_CODE_SEARCH_CPU_MANAGER_H
+#define CUDA_CODE_SEARCH_CPU_MANAGER_H
 
 
-class serial_code {
+class cpu_manager {
     private:
         long batch_size;
         int dimension;
@@ -16,12 +16,12 @@ class serial_code {
 
 
     public:
-    serial_code(long, int, double*, double*, double*, double*, double*);
+    cpu_manager(long, int, double*, double*, double*, double*, double*);
 
-    double CPU_MatVectMult();
+    void search();
     double *get_result();
     void _free();
 };
 
 
-#endif //CUDA_CODE_SEARCH_SERIAL_CODE_H
+#endif //CUDA_CODE_SEARCH_CPU_MANAGER_H

@@ -3,4 +3,4 @@ project(cuda_code_search)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(cuda_code_search main.cu serial_code.cpp serial_code.h utils.cpp utils.h cuda_utils.cu cuda_utils.h gpu_ops.cu gpu_ops.h host_ops.cpp host_ops.h gpu_manager.cpp gpu_manager.h)
+add_executable(cuda_code_search main.cu cpu_manager.cpp cpu_manager.h utils.cpp utils.h cuda_utils.cu cuda_utils.h gpu_ops.cu gpu_ops.h host_database.cpp host_database.h gpu_manager.cpp gpu_manager.h query_holder.cpp query_holder.h)
