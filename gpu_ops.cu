@@ -19,7 +19,7 @@ void gpu_ops::launch_kernel() {
     dim3 dimGrid(1,BlocksPerGrid);
     check_block_grid_dim(deviceProp,dimBlock,dimGrid);
 
-    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_database_A, device_database_B,
+    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_database_A, device_database_B, device_database_probY,
             device_input_A, device_input_B, batch_size,dimension,device_ResDistance);
 
 }
@@ -45,16 +45,18 @@ void gpu_ops::allocate_memory() {
     //allocating memory on GPU
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_B, batch_size * dimension * sizeof(double)));
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_A, batch_size * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_probY, batch_size * sizeof(double)));
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_B, dimension * sizeof(double)));
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_A, sizeof(double)));
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_ResDistance, batch_size * sizeof(double)));
 }
 
 
-void gpu_ops::copy_data_to_device(double* host_database_B, double* host_database_A) {
+void gpu_ops::copy_data_to_device(double* host_database_B, double* host_database_A, double* host_database_probY) {
     //moving data from CPU to GPU
     CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_B, (void*)host_database_B, batch_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
     CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_A, (void*)host_database_A, batch_size * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_probY, (void*)host_database_probY, batch_size * sizeof(double), cudaMemcpyHostToDevice));
 }
 
 void gpu_ops::copy_input_to_device(double* host_input_B, double* host_input_A) {

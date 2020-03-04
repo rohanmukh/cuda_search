@@ -28,12 +28,12 @@ gpu_manager::gpu_manager(long batch_size, int dimension){
 //    list_of_users.at(device_id) = new gpu_ops(device_id, batch_size, dimension);
 //}
 
-void gpu_manager::copy_data_to_database(double* host_database_B, double* host_database_A) {
+void gpu_manager::copy_data_to_database(double* host_database_B, double* host_database_A, double* host_database_prob_Y) {
     std::cout << "========================Copying database for all GPUs======================================" << std::endl;
     for(int i=0; i<list_of_users.size(); i++){
         long offset = compute_batch_offset(i);
         list_of_users.at(i)->set_device(i,"Database Copy");
-        list_of_users.at(i)->copy_data_to_device(host_database_B + offset * dimension, host_database_A);
+        list_of_users.at(i)->copy_data_to_device(host_database_B + offset * dimension, host_database_A+offset, host_database_prob_Y+offset);
     }
 }
 

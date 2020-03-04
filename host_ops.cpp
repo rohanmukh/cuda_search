@@ -14,7 +14,8 @@ host_ops::host_ops(long batch_size, int dimension) {
     /*allocating the memory for each matrix */
 
     host_database_B = (double*)malloc(batch_size * dimension * sizeof(double)); //new double[batch_size * dimension];
-    host_database_A = (double*)malloc(dimension * sizeof(double)); //new double[dimension];
+    host_database_A = (double*)malloc(batch_size * sizeof(double)); //new double[dimension];
+    host_database_prob_Y = (double*)malloc(batch_size * sizeof(double)); //new double[dimension];
 
     host_input_B = (double*)malloc( dimension * sizeof(double)); //new double[batch_size * dimension];
     host_input_A = (double*)malloc(sizeof(double)); //new double[dimension];
@@ -28,6 +29,15 @@ host_ops::host_ops(long batch_size, int dimension) {
     if(host_database_A == NULL)
         mem_error("host_database_A", "vectmatmul", batch_size, "double");
 
+    if(host_database_A == NULL)
+        mem_error("host_database_prob_Y", "vectmatmul", batch_size, "double");
+
+    if(host_database_A == NULL)
+        mem_error("host_input_B", "vectmatmul", batch_size, "double");
+
+    if(host_database_A == NULL)
+        mem_error("host_input_A", "vectmatmul", batch_size, "double");
+
     if(host_ResVect==NULL)
         mem_error("host_ResVect", "vectmatmul", batch_size, "double");
 
@@ -36,7 +46,8 @@ host_ops::host_ops(long batch_size, int dimension) {
 void host_ops::fill_database() {
     //--------------Initializing the input arrays..............
     fill_with_random_doubles(host_database_B, batch_size * dimension);
-    fill_with_constant(host_database_A, dimension, -0.5);
+    fill_with_constant(host_database_A, batch_size, -0.5);
+    fill_with_random_doubles(host_database_prob_Y, batch_size);
 }
 
 void host_ops::fill_input_query() {
@@ -61,5 +72,9 @@ void host_ops::_free() {
     //free host memory----------
     free(host_database_B);
     free(host_database_A);
+    free(host_database_prob_Y);
+    free(host_input_B);
+    free(host_input_A);
     free(host_ResVect);
+
 }

@@ -12,7 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 __global__
-void MatVectMultiplication(const double *device_database_A, const double *device_database_B,
+void MatVectMultiplication(const double *device_database_A, const double *device_database_B, const double *device_database_probY,
         const double *device_input_A, const double *device_input_B,
         int batch_size, int dimension, double *_device_ResVect)
 {
@@ -35,7 +35,7 @@ void MatVectMultiplication(const double *device_database_A, const double *device
         _device_ResVect[tindex] -= 0.5 * dimension * log(-1 * (device_database_A[m] + device_input_A[0]) /
                                                          M_PI); // subtractive ab_star 2nd item
         _device_ResVect[tindex] -= 0.5 * dimension * log(2 * M_PI); // subtractive cons
-        _device_ResVect[tindex] += 0.; // TODO ProbY
+        _device_ResVect[tindex] += device_database_probY[m]; // TODO ProbY
     }
     __syncthreads();
 

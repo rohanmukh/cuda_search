@@ -19,7 +19,7 @@ public:
     gpu_manager(long, int);
 //    void add_user(int);
     long compute_batch_offset(int);
-    void copy_data_to_database(double*, double*);
+    void copy_data_to_database(double*, double*, double*);
     void copy_input_to_device(double* , double* );
     float compute_and_store(double*);
     void _free();

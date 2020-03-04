@@ -8,13 +8,14 @@
 #include <cmath>
 
 serial_code::serial_code(long batch_size, int dimension, double *host_database_B,
-                         double *host_database_A, double *host_input_B, double* host_input_A) {
+                         double *host_database_A, double *host_database_probY, double *host_input_B, double* host_input_A) {
     this->batch_size = batch_size;
     this->dimension = dimension;
     this->host_database_B = host_database_B;
     this->host_database_A = host_database_A;
     this->host_input_B = host_input_B;
     this->host_input_A = host_input_A;
+    this->host_database_probY = host_database_probY;
 }
 
 /*sequential function for mat vect multiplication*/\
@@ -38,7 +39,7 @@ void serial_code::CPU_MatVectMult() {
         cpu_ResVect[k] -= 0.5 * dimension * log(-1 * (host_database_A[offset] + host_input_A[0]) /
                                                 M_PI); // subtractive ab_star 2nd item
         cpu_ResVect[k] -= 0.5 * dimension * log(2 * M_PI); // subtractive cons
-        cpu_ResVect[k] += 0.; // TODO ProbY
+        cpu_ResVect[k] += host_database_probY[offset]; // TODO ProbY
     }
 }
 

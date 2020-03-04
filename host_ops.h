@@ -11,7 +11,8 @@ class host_ops {
     int dimension;
 
 public:
-    double *host_database_B, *host_database_A, *host_input_B, *host_input_A, *host_ResVect;
+    double *host_database_B, *host_database_A, *host_database_prob_Y;
+    double *host_input_B, *host_input_A, *host_ResVect;
 
 public:
     host_ops(long, int);

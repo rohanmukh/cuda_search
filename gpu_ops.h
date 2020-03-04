@@ -19,7 +19,7 @@ private:
     int dimension;
 
     // data
-    double *device_database_B, *device_database_A;
+    double *device_database_B, *device_database_A, *device_database_probY;
     double *device_input_B, *device_input_A;
     double *device_ResDistance;
 
@@ -36,7 +36,7 @@ public:
 
     //data
     void allocate_memory();
-    void copy_data_to_device(double*, double*);
+    void copy_data_to_device(double*, double*, double*);
     void copy_input_to_device(double*, double*);
     void copy_result_to_host(double*);
     void _free();
