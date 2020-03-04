@@ -37,12 +37,12 @@ int main()
     long data_size = DATA_SIZE;
 
     std::cout << "Initializing Host" << std::endl;
-    host_ops *host_system = new host_ops(data_size, dimension);
+    auto *host_system = new host_ops(data_size, dimension);
     host_system->fill_database();
     host_system->fill_input_query();
 
     std::cout << "Initializing GPU Manager" << std::endl;
-    gpu_manager* manager = new gpu_manager(data_size, dimension);
+    auto* manager = new gpu_manager(data_size, dimension);
     manager->copy_data_to_database(host_system->host_database_B, host_system->host_database_A, host_system->host_database_prob_Y);
     manager->copy_input_to_device(host_system->host_input_B, host_system->host_input_A);
     float time_sec = manager->compute_and_store(host_system->host_ResVect);
@@ -52,18 +52,18 @@ int main()
     double gfops = calculate_gflops(time_sec, data_size*dimension);
     print_on_screen("MAT VECT MULTIPLICATION",time_sec, gfops, data_size*dimension,1);
 
-
+    printf("\n ----------------------------------------------------------------------\n");
     // CPU calculation..and checking error deviation....
-    std::cout << "CPU Calculation" << std::endl;
-    serial_code *cpu_user = new serial_code(
+    std::cout << "===========================CPU Calculation==================================" << std::endl;
+    auto *cpu_user = new serial_code(
             data_size, dimension, host_system->host_database_B,
             host_system->host_database_A, host_system->host_database_prob_Y,
             host_system->host_input_B, host_system->host_input_A
             );
-    cpu_user->CPU_MatVectMult();
+    double elapsed_time = cpu_user->CPU_MatVectMult();
+    std::cout << "Time elapsed :: " << elapsed_time << std::endl;
 
-
-    printf("\n ----------------------------------------------------------------------\n");
+    std::cout << "===========================Relative Error==================================" << std::endl;
     relative_error(cpu_user->get_result(), host_system->host_ResVect, data_size);
 
     // Free Memory

@@ -6,6 +6,8 @@
 #include <cuda.h>
 #include "utils.h"
 #include <cmath>
+#include <chrono>
+#include <iostream>
 
 serial_code::serial_code(long batch_size, int dimension, double *host_database_B,
                          double *host_database_A, double *host_database_probY, double *host_input_B, double* host_input_A) {
@@ -22,7 +24,8 @@ serial_code::serial_code(long batch_size, int dimension, double *host_database_B
 }
 
 /*sequential function for mat vect multiplication*/\
-void serial_code::CPU_MatVectMult() {
+double serial_code::CPU_MatVectMult() {
+    auto start = std::chrono::steady_clock::now();
     for (int k = 0; k < batch_size; k++) {
         int offset = k * dimension;
         cpu_ResVect[k] = 0.00;
@@ -40,6 +43,9 @@ void serial_code::CPU_MatVectMult() {
         cpu_ResVect[k] -= 0.5 * dimension * log(2 * M_PI); // subtractive cons
         cpu_ResVect[k] += host_database_probY[k];
     }
+    auto stop = std::chrono::steady_clock::now();
+    double time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count();
+    return 1.0e-9 * time;
 }
 
 double *serial_code::get_result() {

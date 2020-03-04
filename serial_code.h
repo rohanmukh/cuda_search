@@ -18,7 +18,7 @@ class serial_code {
     public:
     serial_code(long, int, double*, double*, double*, double*, double*);
 
-    void CPU_MatVectMult();
+    double CPU_MatVectMult();
     double *get_result();
     void _free();
 };
