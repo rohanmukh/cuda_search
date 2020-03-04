@@ -26,16 +26,16 @@ void MatVectMultiplication(const double *device_database_A, const double *device
         for (int i = 0; i < dimension; i++) {
             _device_ResVect[tindex] += pow(device_input_B[i], 2) / (4 * device_input_A[0]); // additive ab1 1st item
             _device_ResVect[tindex] +=
-                    pow(device_database_B[m + i], 2) / (4 * device_database_A[m]); // additive ab2 1st item
+                    pow(device_database_B[m + i], 2) / (4 * device_database_A[tindex]); // additive ab2 1st item
             _device_ResVect[tindex] -= pow(device_database_B[m + i] + device_input_B[i], 2) /
-                                       (4 * (device_database_A[m] + device_input_A[0])); // subtractive ab_star 1st item
+                                       (4 * (device_database_A[tindex] + device_input_A[0])); // subtractive ab_star 1st item
         }
         _device_ResVect[tindex] += 0.5 * dimension * log(-1 * (device_input_A[0]) / M_PI); // additive ab1 2nd item
-        _device_ResVect[tindex] += 0.5 * dimension * log(-1 * (device_database_A[m]) / M_PI); // additive ab2_2nd item
-        _device_ResVect[tindex] -= 0.5 * dimension * log(-1 * (device_database_A[m] + device_input_A[0]) /
+        _device_ResVect[tindex] += 0.5 * dimension * log(-1 * (device_database_A[tindex]) / M_PI); // additive ab2_2nd item
+        _device_ResVect[tindex] -= 0.5 * dimension * log(-1 * (device_database_A[tindex] + device_input_A[0]) /
                                                          M_PI); // subtractive ab_star 2nd item
         _device_ResVect[tindex] -= 0.5 * dimension * log(2 * M_PI); // subtractive cons
-        _device_ResVect[tindex] += device_database_probY[m]; // TODO ProbY
+        _device_ResVect[tindex] += device_database_probY[tindex];
     }
     __syncthreads();
 
