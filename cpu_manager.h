@@ -12,12 +12,12 @@ class cpu_manager {
         int dimension;
         double *host_database_B, *host_database_A, *host_database_probY;
         double *host_input_B, *host_input_A;
-        double *cpu_ResVect;
+        double *result_vector;
 
 
     public:
-    cpu_manager(long, int, double*, double*, double*, double*, double*);
-
+    cpu_manager(long, int, double*, double*, double*);
+    void add_query(double*, double*);
     void search();
     double *get_result();
     void _free();

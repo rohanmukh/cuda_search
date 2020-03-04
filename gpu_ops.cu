@@ -20,7 +20,7 @@ void gpu_ops::launch_kernel() {
     check_block_grid_dim(deviceProp,dimBlock,dimGrid);
 
     MatVectMultiplication<<<dimGrid,dimBlock>>>(device_database_A, device_database_B, device_database_probY,
-            device_input_A, device_input_B, batch_size,dimension,device_ResDistance);
+            device_input_A, device_input_B, batch_size,dimension,device_result_vector);
 
 }
 
@@ -48,7 +48,7 @@ void gpu_ops::allocate_memory() {
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_probY, batch_size * sizeof(double)));
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_B, dimension * sizeof(double)));
     CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_A, sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_ResDistance, batch_size * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_result_vector, batch_size * sizeof(double)));
 }
 
 
@@ -67,7 +67,7 @@ void gpu_ops::copy_input_to_device(double* host_input_B, double* host_input_A) {
 
 void gpu_ops::copy_result_to_host(double *host_ResVect) {
     //retriving result from device
-    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResDistance, batch_size * sizeof(double), cudaMemcpyDeviceToHost));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_result_vector, batch_size * sizeof(double), cudaMemcpyDeviceToHost));
 }
 
 void gpu_ops::_free() {
@@ -76,7 +76,7 @@ void gpu_ops::_free() {
     CUDA_SAFE_CALL(cudaFree(device_database_A));
     CUDA_SAFE_CALL(cudaFree(device_input_B));
     CUDA_SAFE_CALL(cudaFree(device_input_A));
-    CUDA_SAFE_CALL(cudaFree(device_ResDistance));
+    CUDA_SAFE_CALL(cudaFree(device_result_vector));
 }
 
 
@@ -87,11 +87,11 @@ void gpu_ops::start_event() {
     CUDA_SAFE_CALL(cudaEventCreate (&stop));
 }
 
-float gpu_ops::stop_event() {
+double gpu_ops::stop_event() {
     CUDA_SAFE_CALL(cudaEventRecord (stop, 0));
     CUDA_SAFE_CALL(cudaEventSynchronize (stop));
     CUDA_SAFE_CALL(cudaEventElapsedTime ( &elapsedTime, start, stop));
-    float Tsec= 1.0e-3*elapsedTime; // time in seconds
+    double Tsec= 1.0e-3*elapsedTime; // time in seconds
     return Tsec;
 }
 

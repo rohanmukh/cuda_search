@@ -12,6 +12,6 @@ void print_on_screen(const std::string& program_name,float tsec,double gflops,lo
 void fill_with_random_doubles(double* vec, long size);
 void fill_with_constant(double* vec, long size, double constant);
 void relative_error(double* dRes, double* hRes, long size);
-double calculate_gflops(float &Tsec, long size);
+double calculate_gflops(double &Tsec, long size);
 
 #endif //CUDA_CODE_SEARCH_UTILS_H

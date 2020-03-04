@@ -21,7 +21,7 @@ private:
     // data
     double *device_database_B, *device_database_A, *device_database_probY;
     double *device_input_B, *device_input_A;
-    double *device_ResDistance;
+    double *device_result_vector;
 
     // device
     int device_id;
@@ -48,7 +48,7 @@ public:
 
     //timers
     void start_event();
-    float stop_event();
+    double stop_event();
 };
 
 

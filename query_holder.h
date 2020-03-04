@@ -11,10 +11,10 @@ class query_holder {
 
 public:
 
-    double *host_input_B, *host_input_A;
+    double *host_query_B, *host_query_A;
 
 public:
-    query_holder(int);
+    explicit query_holder(int);
 
     void fill_input_query();
     void _free();

@@ -29,10 +29,9 @@ void print_on_screen(const std::string& program_name,float tsec,double gflops,lo
 }
 
 /*calculate Gflops*/
-double calculate_gflops(float &Tsec, long size)
+double calculate_gflops(double &Tsec, long size)
 {
     double gflops=(1.0e-9 * (( 2.0 * size )/Tsec));
-    print_on_screen("MAT VECT MULTIPLICATION", Tsec, gflops, size, 1);
     return gflops;
 }
 
