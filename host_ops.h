@@ -11,11 +11,12 @@ class host_ops {
     int dimension;
 
 public:
-    double *host_Mat, *host_Vect, *host_ResVect;
+    double *host_database_B, *host_database_A, *host_input_B, *host_input_A, *host_ResVect;
 
 public:
     host_ops(long, int);
-    void fill_with_random_data();
+    void fill_database_with_random_data();
+    void fill_input_with_random_data();
     void _free();
     double* get_host_vector();
     double* get_host_matrix();

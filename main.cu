@@ -38,11 +38,13 @@ int main()
 
     std::cout << "Initializing Host" << std::endl;
     host_ops *host_system = new host_ops(data_size, dimension);
-    host_system->fill_with_random_data();
+    host_system->fill_database_with_random_data();
+    host_system->fill_input_with_random_data();
 
     std::cout << "Initializing GPU Manager" << std::endl;
     gpu_manager* manager = new gpu_manager(data_size, dimension);
-    manager->copy_data(host_system->host_Mat, host_system->host_Vect);
+    manager->copy_data_to_database(host_system->host_database_B, host_system->host_database_A);
+    manager->copy_input_to_device(host_system->host_input_B, host_system->host_input_A);
     float time_sec = manager->compute_and_store(host_system->host_ResVect);
 
 
@@ -53,7 +55,7 @@ int main()
 
     // CPU calculation..and checking error deviation....
     std::cout << "CPU Calculation" << std::endl;
-    serial_code *cpu_user = new serial_code(data_size, dimension, host_system->host_Mat, host_system->host_Vect);
+    serial_code *cpu_user = new serial_code(data_size, dimension, host_system->host_database_B, host_system->host_input_B);
     cpu_user->CPU_MatVectMult();
 
 

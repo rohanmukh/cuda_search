@@ -13,19 +13,18 @@ void gpu_ops::launch_kernel() {
 
     /* threads_per_block, blocks_per_grid  */
     int max=BLOCKSIZE*BLOCKSIZE;
-    int BlocksPerGrid= batch_size / max + 1;
+    long BlocksPerGrid= batch_size / max + 1;
     dim3 dimBlock(BLOCKSIZE,BLOCKSIZE);
     if(batch_size % max == 0)BlocksPerGrid--;
     dim3 dimGrid(1,BlocksPerGrid);
     check_block_grid_dim(deviceProp,dimBlock,dimGrid);
 
-    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_Mat,device_Vect,batch_size,dimension,device_ResVect);
+    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_database_B,device_input_B,batch_size,dimension,device_ResDistance);
 
 }
 
 
 void gpu_ops::get_device_property() {
-
     int device;
     // Current Device Detection
     cudaGetDevice(&device);
@@ -43,31 +42,38 @@ void gpu_ops::set_device(int _device_id, const std::string& message="") {
 
 void gpu_ops::allocate_memory() {
     //allocating memory on GPU
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_Mat, batch_size * dimension * sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc( (void**)&device_Vect, dimension* sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_ResVect, batch_size * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_B, batch_size * dimension * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_A, batch_size * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_B, dimension * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_A, sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_ResDistance, batch_size * sizeof(double)));
 }
 
 
-void gpu_ops::copy_to_device(double* host_Mat, double* host_Vect) {
+void gpu_ops::copy_data_to_device(double* host_database_B, double* host_database_A) {
     //moving data from CPU to GPU
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Mat, (void*)host_Mat, batch_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_Vect, (void*)host_Vect,dimension*sizeof(double),cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_B, (void*)host_database_B, batch_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_A, (void*)host_database_A, batch_size * sizeof(double), cudaMemcpyHostToDevice));
 }
 
+void gpu_ops::copy_input_to_device(double* host_input_B, double* host_input_A) {
+    //moving data from CPU to GPU
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_B, (void*)host_input_B, dimension * sizeof(double) , cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_A, (void*)host_input_A, sizeof(double), cudaMemcpyHostToDevice));
+}
 
-
-void gpu_ops::copy_to_host(double *host_ResVect) {
+void gpu_ops::copy_result_to_host(double *host_ResVect) {
     //retriving result from device
-    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResVect, batch_size * sizeof(double), cudaMemcpyDeviceToHost));
-
+    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_ResDistance, batch_size * sizeof(double), cudaMemcpyDeviceToHost));
 }
 
 void gpu_ops::_free() {
     /*free the memory from GPU */
-    CUDA_SAFE_CALL(cudaFree(device_Mat));
-    CUDA_SAFE_CALL(cudaFree(device_Vect));
-    CUDA_SAFE_CALL(cudaFree(device_ResVect));
+    CUDA_SAFE_CALL(cudaFree(device_database_B));
+    CUDA_SAFE_CALL(cudaFree(device_database_A));
+    CUDA_SAFE_CALL(cudaFree(device_input_B));
+    CUDA_SAFE_CALL(cudaFree(device_input_A));
+    CUDA_SAFE_CALL(cudaFree(device_ResDistance));
 }
 
 
