@@ -2,6 +2,7 @@
 // Created by rm38 on 3/2/20.
 //
 #include <cuda.h>
+#include <cmath>
 #define BLOCKSIZE 16
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -11,21 +12,31 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 __global__
-void MatVectMultiplication(const double *_device_B, const double *_device_Vect, int _matRowSize, int _vlength, double *_device_ResVect)
+void MatVectMultiplication(const double *device_database_A, const double *device_database_B,
+        const double *device_input_A, const double *device_input_B,
+        int batch_size, int dimension, double *_device_ResVect)
 {
     int tidx = blockIdx.x*blockDim.x + threadIdx.x;
     int tidy = blockIdx.y*blockDim.y + threadIdx.y;
     int tindex=tidx+gridDim.x*BLOCKSIZE*tidy;
 
-
-    if(tindex < _matRowSize)
-    {
-        int i;int m= tindex * _vlength;
-        _device_ResVect[tindex]=0.00;
-        for(i=0; i < _vlength; i++)
-            _device_ResVect[tindex]+= _device_B[m + i] * _device_Vect[i];
+    if(tindex < batch_size) {
+        int m = tindex * dimension;
+        _device_ResVect[tindex] = 0.00;
+        for (int i = 0; i < dimension; i++) {
+            _device_ResVect[tindex] += pow(device_input_B[i], 2) / (4 * device_input_A[0]); // additive ab1 1st item
+            _device_ResVect[tindex] +=
+                    pow(device_database_B[m + i], 2) / (4 * device_database_A[m]); // additive ab2 1st item
+            _device_ResVect[tindex] -= pow(device_database_B[m + i] + device_input_B[i], 2) /
+                                       (4 * (device_database_A[m] + device_input_A[0])); // subtractive ab_star 1st item
+        }
+        _device_ResVect[tindex] += 0.5 * dimension * log(-1 * (device_input_A[0]) / M_PI); // additive ab1 2nd item
+        _device_ResVect[tindex] += 0.5 * dimension * log(-1 * (device_database_A[m]) / M_PI); // additive ab2_2nd item
+        _device_ResVect[tindex] -= 0.5 * dimension * log(-1 * (device_database_A[m] + device_input_A[0]) /
+                                                         M_PI); // subtractive ab_star 2nd item
+        _device_ResVect[tindex] -= 0.5 * dimension * log(2 * M_PI); // subtractive cons
+        _device_ResVect[tindex] += 0.; // TODO ProbY
     }
-
     __syncthreads();
 
 }//end of MatVect device function

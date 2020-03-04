@@ -19,7 +19,8 @@ void gpu_ops::launch_kernel() {
     dim3 dimGrid(1,BlocksPerGrid);
     check_block_grid_dim(deviceProp,dimBlock,dimGrid);
 
-    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_database_B,device_input_B,batch_size,dimension,device_ResDistance);
+    MatVectMultiplication<<<dimGrid,dimBlock>>>(device_database_A, device_database_B,
+            device_input_A, device_input_B, batch_size,dimension,device_ResDistance);
 
 }
 

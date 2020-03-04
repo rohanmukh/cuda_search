@@ -33,16 +33,16 @@ host_ops::host_ops(long batch_size, int dimension) {
 
 }
 
-void host_ops::fill_database_with_random_data() {
+void host_ops::fill_database() {
     //--------------Initializing the input arrays..............
     fill_with_random_doubles(host_database_B, batch_size * dimension);
-    fill_with_random_doubles(host_database_A, dimension);
+    fill_with_constant(host_database_A, dimension, -0.5);
 }
 
-void host_ops::fill_input_with_random_data() {
+void host_ops::fill_input_query() {
     //--------------Initializing the input arrays..............
     fill_with_random_doubles(host_input_B, dimension);
-    fill_with_random_doubles(host_input_A, 1);
+    fill_with_constant(host_input_A, 1, -0.5);
 }
 
 double *host_ops::get_result_vector(){

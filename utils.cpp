@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <cmath>
 
-#define EPS 1.0e-15
+#define EPS 1.0e-32
 
 
 /*mem error*/
@@ -40,9 +40,15 @@ double calculate_gflops(float &Tsec, long size)
 /*Fill in the vector with double precision values */
 void fill_with_random_doubles(double* vec, long size)
 {
-    int ind;
-    for(ind=0;ind<size;ind++)
+    for(int ind=0;ind<size;ind++)
         vec[ind]=drand48();
+}
+
+/*Fill in the vector with double precision values */
+void fill_with_constant(double* vec, long size, double constant)
+{
+    for(int ind=0;ind<size;ind++)
+        vec[ind]=constant;
 }
 
 /* function to calculate relative error*/

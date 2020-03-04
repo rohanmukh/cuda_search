@@ -15,8 +15,8 @@ public:
 
 public:
     host_ops(long, int);
-    void fill_database_with_random_data();
-    void fill_input_with_random_data();
+    void fill_database();
+    void fill_input_query();
     void _free();
     double* get_host_vector();
     double* get_host_matrix();
