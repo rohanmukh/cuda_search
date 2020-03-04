@@ -7,8 +7,7 @@
 #include <cstdlib>
 #include <cmath>
 
-#define EPS 1.0e-32
-
+#define EPS 1.0e-15
 
 /*mem error*/
 void mem_error(const std::string& arrayname, const std::string& benchmark, long len, const std::string& type)

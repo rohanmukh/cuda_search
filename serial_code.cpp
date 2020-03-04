@@ -17,7 +17,7 @@ serial_code::serial_code(long batch_size, int dimension, double *host_database_B
     this->host_input_A = host_input_A;
     this->host_database_probY = host_database_probY;
     this->cpu_ResVect = (double *) malloc(batch_size * sizeof(double));
-    if (cpu_ResVect == NULL)
+    if (cpu_ResVect == nullptr)
         mem_error("cpu_ResVect", "vectmatmul", batch_size, "double");
 }
 

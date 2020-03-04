@@ -23,22 +23,22 @@ host_ops::host_ops(long batch_size, int dimension) {
     host_ResVect = (double*)malloc(batch_size * sizeof(double)); // new double[batch_size];
 
     // ---------------checking host memory  for error..............................
-    if(host_database_B == NULL)
+    if(host_database_B == nullptr)
         mem_error("host_database_B", "vectmatmul", batch_size * dimension, "double");
 
-    if(host_database_A == NULL)
+    if(host_database_A == nullptr)
         mem_error("host_database_A", "vectmatmul", batch_size, "double");
 
-    if(host_database_A == NULL)
+    if(host_database_A == nullptr)
         mem_error("host_database_prob_Y", "vectmatmul", batch_size, "double");
 
-    if(host_database_A == NULL)
+    if(host_database_A == nullptr)
         mem_error("host_input_B", "vectmatmul", batch_size, "double");
 
-    if(host_database_A == NULL)
+    if(host_database_A == nullptr)
         mem_error("host_input_A", "vectmatmul", batch_size, "double");
 
-    if(host_ResVect==NULL)
+    if(host_ResVect==nullptr)
         mem_error("host_ResVect", "vectmatmul", batch_size, "double");
 
 }
