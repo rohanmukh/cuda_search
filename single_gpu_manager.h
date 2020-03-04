@@ -2,8 +2,8 @@
 // Created by rm38 on 3/2/20.
 //
 
-#ifndef CUDA_CODE_SEARCH_GPU_OPS_H
-#define CUDA_CODE_SEARCH_GPU_OPS_H
+#ifndef CUDA_CODE_SEARCH_SINGLE_GPU_MANAGER_H
+#define CUDA_CODE_SEARCH_SINGLE_GPU_MANAGER_H
 
 #include <cuda_runtime_api.h>
 #include <cuda.h>
@@ -11,11 +11,11 @@
 #include "cuda_utils.h"
 #include "utils.h"
 
-class gpu_ops {
+class single_gpu_manager {
 private:
 
     // size of the data
-    long batch_size;
+    long device_data_size;
     int dimension;
 
     // data
@@ -32,7 +32,7 @@ private:
 
 
 public:
-    gpu_ops(int, long, int);
+    single_gpu_manager(int, long, int);
 
     //data
     void allocate_memory();
@@ -52,4 +52,4 @@ public:
 };
 
 
-#endif //CUDA_CODE_SEARCH_GPU_OPS_H
+#endif //CUDA_CODE_SEARCH_SINGLE_GPU_MANAGER_H

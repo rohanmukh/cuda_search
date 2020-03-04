@@ -6,27 +6,27 @@
 #include "utils.h"
 #include <cstdlib>
 
-host_database::host_database(long batch_size, int dimension) {
+host_database::host_database(long data_size, int dimension) {
 
     this->dimension = dimension;
-    this->batch_size = batch_size;
+    this->batch_size = data_size;
 
     /*allocating the memory for each matrix */
 
-    host_database_B = (double*)malloc(batch_size * dimension * sizeof(double)); //new double[batch_size * dimension];
-    host_database_A = (double*)malloc(batch_size * sizeof(double)); //new double[dimension];
-    host_database_prob_Y = (double*)malloc(batch_size * sizeof(double)); //new double[dimension];
+    host_database_B = (double*)malloc(data_size * dimension * sizeof(double)); //new double[data_size * dimension];
+    host_database_A = (double*)malloc(data_size * sizeof(double)); //new double[dimension];
+    host_database_prob_Y = (double*)malloc(data_size * sizeof(double)); //new double[dimension];
 
 
     // ---------------checking host memory  for error..............................
     if(host_database_B == nullptr)
-        mem_error("host_database_B", "vectmatmul", batch_size * dimension, "double");
+        mem_error("host_database_B", "vectmatmul", data_size * dimension, "double");
 
     if(host_database_A == nullptr)
-        mem_error("host_database_A", "vectmatmul", batch_size, "double");
+        mem_error("host_database_A", "vectmatmul", data_size, "double");
 
     if(host_database_prob_Y == nullptr)
-        mem_error("host_database_prob_Y", "vectmatmul", batch_size, "double");
+        mem_error("host_database_prob_Y", "vectmatmul", data_size, "double");
 
 
 }

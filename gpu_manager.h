@@ -7,19 +7,19 @@
 
 #include <vector>
 #include <string>
-#include "gpu_ops.h"
+#include "single_gpu_manager.h"
 
 class gpu_manager {
-    long batch_size;
+    long device_data_size;
     int dimension;
     int num_devices;
-    std::vector<gpu_ops*> list_of_users;
+    std::vector<single_gpu_manager*> list_of_users;
     double* result_vector;
 
 public:
     gpu_manager(long, int);
 //    void add_user(int);
-    long compute_batch_offset(int);
+    long compute_device_data_offset(int);
     void copy_database_to_device(double*, double*, double*);
     void add_query(double* , double* );
     double *get_result();

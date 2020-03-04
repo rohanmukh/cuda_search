@@ -17,7 +17,7 @@ void mem_error(const std::string& arrayname, const std::string& benchmark, long 
 }
 
 /*prints the result in screen*/
-void print_on_screen(const std::string& program_name,float tsec,double gflops,long size, int flag)//flag=1 if gflops has been calculated else flag =0
+void print_on_screen(const std::string& program_name,double tsec,double gflops,long size, int flag)//flag=1 if gflops has been calculated else flag =0
 {
     printf("\n---------------%s----------------\n",program_name.c_str());
     printf("\tSIZE\t TIME_SEC\t Gflops\n");

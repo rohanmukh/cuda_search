@@ -25,9 +25,9 @@ cpu_manager::cpu_manager(long batch_size, int dimension, double *host_database_B
 }
 
 
-void cpu_manager::add_query( double *host_input_B, double* host_input_A) {
-    this->host_input_B = host_input_B;
-    this->host_input_A = host_input_A;
+void cpu_manager::add_query( double *_host_input_B, double* _host_input_A) {
+    this->host_input_B = _host_input_B;
+    this->host_input_A = _host_input_A;
 }
 
 
