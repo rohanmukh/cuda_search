@@ -7,7 +7,7 @@
 
 
 class host_database {
-    long batch_size;
+    long data_size;
     int dimension;
 
 public:
