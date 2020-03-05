@@ -3,10 +3,8 @@
 //
 
 #include "gpu_manager.h"
-#include "cuda_utils.h"
-#include "utils.h"
-#include <cassert>
-#include <iostream>
+
+
 
 /*Get the number of GPU devices present on the host */
 gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
@@ -57,7 +55,7 @@ void gpu_manager::add_query(double* host_input_B, double* host_input_A) {
 
 
 void gpu_manager::search() {
-    double time_sec = 0.;
+    auto start = std::chrono::steady_clock::now();
     // std::cout << "================================Computing data for all GPUs======================================\n" << std::endl;
     for(int i=0; i<list_of_users.size(); i++) {
         list_of_users.at(i)->set_device(i, "Compute and Store");
@@ -65,14 +63,26 @@ void gpu_manager::search() {
         list_of_users.at(i)->launch_kernel();
         long offset = compute_device_num_batch_offset(i);
         list_of_users.at(i)->copy_result_to_host(result_vector + offset*batch_size);
-        time_sec = std::max(time_sec, list_of_users.at(i)->stop_event());
+        list_of_users.at(i)->stop_event();
+        // time_sec = std::max(time_sec, );
     }
+    auto stop = std::chrono::steady_clock::now();
+    double time_sec = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
     // std::cout << "===========================================GPU Calculation========================================\n" << std::endl;
-    double gflops = calculate_gflops(time_sec, device_num_batches * dimension);
-    print_on_screen("GPU Search", time_sec, gflops, device_num_batches * batch_size * dimension, 1);
+    double gflops = calculate_gflops(time_sec, device_num_batches *batch_size* dimension);
+    print_on_screen("GPU Search", time_sec, gflops, device_num_batches * batch_size * num_devices, 1);
 
 }
 
+void gpu_manager::top_k(int k){
+      auto start = std::chrono::steady_clock::now();
+      std::vector<double> myvector (result_vector, result_vector + device_num_batches * batch_size);
+      std::partial_sort (myvector.begin(), myvector.begin()+k, myvector.end(), [](int a, int b) {return a > b; });
+      auto stop = std::chrono::steady_clock::now();
+      double time_sec = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
+      double gflops = calculate_gflops(time_sec, device_num_batches *batch_size);
+      print_on_screen("CPU Sort", time_sec, gflops, device_num_batches * batch_size * num_devices, 1);
+}
 
 long gpu_manager::compute_device_num_batch_offset(int device_id){
     return device_id * device_num_batches;

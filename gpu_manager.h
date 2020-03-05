@@ -7,7 +7,14 @@
 
 #include <vector>
 #include <string>
+#include <cassert>
+#include <chrono>
+#include <iostream>
+#include <algorithm>    // std::partial_sort
 #include "single_gpu_manager.h"
+#include "cuda_utils.h"
+#include "utils.h"
+
 
 class gpu_manager {
     long device_num_batches, batch_size;
@@ -18,7 +25,7 @@ class gpu_manager {
 
 public:
     gpu_manager(int, long, int);
-//    void add_user(int);
+    void top_k(int k=10);
     long compute_device_num_batch_offset(int);
     void copy_database_to_device(double**, double**, double**);
     void add_query(double* , double* );

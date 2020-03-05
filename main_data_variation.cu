@@ -36,7 +36,7 @@ int main()
 {
     int dimension = DIMENSION;
 
-    std::vector<int> multiplier{ 1,2,4,8,16,32};
+    std::vector<int> multiplier{ 1, 2, 4, 8, 16, 26, 32};
     for(int m : multiplier){
         long data_size = DATA_SIZE * m;
         std::cout << "/* Running on Data Size :: " << data_size << "*/"<< std::endl;
@@ -53,14 +53,12 @@ int main()
 
         gpu_user->add_query(query->host_query_B, query->host_query_A);
         gpu_user->search();
-        // relative_error(cpu_user->get_result(), gpu_user->get_result(), data_size);
+        gpu_user->top_k();
         host_db->_free();
         query->_free();
         gpu_user->_free();
     }
-    // Free Memory
 
-    // cpu_user->_free();
 
     return 0;
 }// end of main
