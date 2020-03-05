@@ -26,7 +26,7 @@
 #include "query_holder.h"
 
 
-#define DATA_SIZE 1024
+#define DATA_SIZE 1000000
 #define DIMENSION 256
 
 

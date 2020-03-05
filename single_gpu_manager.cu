@@ -30,13 +30,13 @@ void single_gpu_manager::get_device_property() {
     // Current Device Detection
     cudaGetDevice(&device);
     cudaGetDeviceProperties(&deviceProp,device);
-    printf("Using device %d: %s \n", device, deviceProp.name);
+    // printf("Using device %d: %s \n", device, deviceProp.name);
 
 }
 
 void single_gpu_manager::set_device(int _device_id, const std::string& message="") {
     // Device Selection, Device 1: Tesla C1060
-    std::cout << "Setting Device :: " << _device_id << " for " << message << std::endl;
+    // std::cout << "Setting Device :: " << _device_id << " for " << message << std::endl;
     cudaSetDevice(_device_id);
 }
 
@@ -108,4 +108,3 @@ single_gpu_manager::single_gpu_manager(int device_id, long device_num_batches, l
     get_device_property();
     allocate_memory();
 }
-
