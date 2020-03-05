@@ -52,11 +52,11 @@ void single_gpu_manager::allocate_memory() {
 }
 
 
-void single_gpu_manager::copy_data_to_device(double* host_database_B, double* host_database_A, double* host_database_probY) {
+void single_gpu_manager::copy_data_to_device(long offset, double* host_database_B, double* host_database_A, double* host_database_probY) {
     //moving data from CPU to GPU
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_B, (void*)host_database_B, device_data_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_A, (void*)host_database_A, device_data_size * sizeof(double), cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_database_probY, (void*)host_database_probY, device_data_size * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_B + offset*dimension), (void*)host_database_B, batch_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_A + offset), (void*)host_database_A, batch_size * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_probY + offset), (void*)host_database_probY, batch_size * sizeof(double), cudaMemcpyHostToDevice));
 }
 
 void single_gpu_manager::copy_input_to_device(double* host_input_B, double* host_input_A) {
@@ -74,6 +74,7 @@ void single_gpu_manager::_free() {
     /*free the memory from GPU */
     CUDA_SAFE_CALL(cudaFree(device_database_B));
     CUDA_SAFE_CALL(cudaFree(device_database_A));
+    CUDA_SAFE_CALL(cudaFree(device_database_probY));
     CUDA_SAFE_CALL(cudaFree(device_input_B));
     CUDA_SAFE_CALL(cudaFree(device_input_A));
     CUDA_SAFE_CALL(cudaFree(device_result_vector));
@@ -95,9 +96,13 @@ double single_gpu_manager::stop_event() {
     return Tsec;
 }
 
-single_gpu_manager::single_gpu_manager(int device_id, long batch_size, int dimension) {
+single_gpu_manager::single_gpu_manager(int device_id, long device_num_batches, long batch_size, int dimension) {
     this->device_id = device_id;
-    this->device_data_size = batch_size;
+
+    this->device_num_batches = device_num_batches;
+    this->batch_size = batch_size;
+    this->device_data_size = device_num_batches*batch_size;
+
     this->dimension = dimension;
     set_device(device_id, "Initialization");
     get_device_property();

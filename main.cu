@@ -43,7 +43,7 @@ int main()
     auto *query = new query_holder(dimension);
     query->fill_input_query();
 
-    auto* gpu_user = new gpu_manager(data_size, dimension);
+    auto* gpu_user = new gpu_manager(host_db->num_batches, host_db->batch_size, dimension);
     gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
                                       host_db->host_database_prob_Y
                                       );
@@ -52,7 +52,7 @@ int main()
     gpu_user->search();
 
     auto *cpu_user = new cpu_manager(
-            data_size, dimension, host_db->host_database_B,
+            host_db->num_batches, host_db->batch_size, dimension, host_db->host_database_B,
             host_db->host_database_A, host_db->host_database_prob_Y
             );
     cpu_user->add_query(query->host_query_B, query->host_query_A);

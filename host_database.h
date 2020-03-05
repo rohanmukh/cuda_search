@@ -11,7 +11,10 @@ class host_database {
     int dimension;
 
 public:
-    double *host_database_B, *host_database_A, *host_database_prob_Y;
+    int num_batches; long batch_size;
+
+public:
+    double **host_database_B, **host_database_A, **host_database_prob_Y;
 
 public:
     host_database(long, int);

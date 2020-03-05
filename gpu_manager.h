@@ -10,17 +10,17 @@
 #include "single_gpu_manager.h"
 
 class gpu_manager {
-    long device_data_size;
+    long device_num_batches, batch_size;
     int dimension;
     int num_devices;
     std::vector<single_gpu_manager*> list_of_users;
     double* result_vector;
 
 public:
-    gpu_manager(long, int);
+    gpu_manager(int, long, int);
 //    void add_user(int);
-    long compute_device_data_offset(int);
-    void copy_database_to_device(double*, double*, double*);
+    long compute_device_num_batch_offset(int);
+    void copy_database_to_device(double**, double**, double**);
     void add_query(double* , double* );
     double *get_result();
     void search();

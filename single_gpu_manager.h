@@ -15,7 +15,7 @@ class single_gpu_manager {
 private:
 
     // size of the data
-    long device_data_size;
+    long device_num_batches, batch_size, device_data_size;
     int dimension;
 
     // data
@@ -32,11 +32,11 @@ private:
 
 
 public:
-    single_gpu_manager(int, long, int);
+    single_gpu_manager(int, long, long, int);
 
     //data
     void allocate_memory();
-    void copy_data_to_device(double*, double*, double*);
+    void copy_data_to_device(long, double*, double*, double*);
     void copy_input_to_device(double*, double*);
     void copy_result_to_host(double*);
     void _free();
