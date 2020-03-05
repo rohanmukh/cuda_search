@@ -20,7 +20,7 @@ cpu_manager::cpu_manager( long num_batches, long batch_size, int dimension, doub
     this->host_database_probY = host_database_probY;
 
 
-    this->result_vector = (double *) malloc(num_batches * batch_size * sizeof(double));
+    this->result_vector = (double *) malloc(num_batches * batch_size *  sizeof(double));
     if (result_vector == nullptr)
         mem_error("result_vector", "vectmatmul", batch_size, "double");
 }

@@ -24,7 +24,7 @@ gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
     for(int i=0; i<this->num_devices; i++)
         this->list_of_users.push_back(new single_gpu_manager(i, device_num_batches, batch_size, dimension));
 
-    result_vector = (double*)malloc(device_num_batches * batch_size * sizeof(double)); // new double[data_size];
+    result_vector = (double*)malloc(num_batches * batch_size * sizeof(double)); // new double[data_size];
     if(result_vector == nullptr)
         mem_error("result_vector", "vectmatmul", device_num_batches * batch_size, "double");
 
@@ -64,7 +64,7 @@ void gpu_manager::search() {
         list_of_users.at(i)->start_event();
         list_of_users.at(i)->launch_kernel();
         long offset = compute_device_num_batch_offset(i);
-        list_of_users.at(i)->copy_result_to_host(result_vector + offset);
+        list_of_users.at(i)->copy_result_to_host(result_vector + offset*batch_size);
         time_sec = std::max(time_sec, list_of_users.at(i)->stop_event());
     }
     std::cout << "===========================================GPU Calculation========================================\n" << std::endl;
