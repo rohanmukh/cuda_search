@@ -40,6 +40,7 @@ host_database::host_database(long data_size, int dimension) {
 
 void host_database::fill_database() {
     //--------------Initializing the input arrays..............
+    #pragma omp parallel for
     for (int i=0;i<this->num_batches; i++) {
         fill_with_random_doubles(host_database_B[i], batch_size * dimension);
         fill_with_constant(host_database_A[i], batch_size, -0.5);
