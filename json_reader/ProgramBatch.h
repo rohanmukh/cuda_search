@@ -13,6 +13,7 @@
 #include "Program.h"
 
 class ProgramBatch {
+public:
     int dimension;
     int num_programs;
 
