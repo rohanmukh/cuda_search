@@ -12,9 +12,9 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 __global__
-void MatVectMultiplication(const double *device_database_A, const double *device_database_B, const double *device_database_probY,
-        const double *device_input_A, const double *device_input_B,
-        int batch_size, int dimension, double *_device_ResVect)
+void MatVectMultiplication(const float *device_database_A, const float *device_database_B, const float *device_database_probY,
+        const float *device_input_A, const float *device_input_B,
+        int batch_size, int dimension, float *_device_ResVect)
 {
     int tidx = blockIdx.x*blockDim.x + threadIdx.x;
     int tidy = blockIdx.y*blockDim.y + threadIdx.y;

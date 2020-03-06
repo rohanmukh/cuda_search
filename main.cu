@@ -36,7 +36,7 @@ int main()
 {
     // Vector length , Matrix Row and Col sizes..............
     int dimension = DIMENSION;
-    long data_size = DATA_SIZE;
+//    long data_size = DATA_SIZE;
 
 //    auto *host_db = new host_database(data_size, dimension);
 //    host_db->fill_database();
