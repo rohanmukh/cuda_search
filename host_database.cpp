@@ -19,6 +19,10 @@ host_database::host_database(long data_size, int dimension) {
     host_database_A = (double**)malloc(num_batches * sizeof(double*)); //new double[dimension];
     host_database_prob_Y = (double**)malloc(num_batches * sizeof(double*)); //new double[dimension];
 
+}
+
+
+void host_database::allocate() {
     /*allocating the memory for each matrix */
     for (int i=0;i<this->num_batches; i++){
         host_database_B[i] = (double*)malloc(batch_size * dimension * sizeof(double)); //new double[data_size * dimension];
@@ -38,8 +42,10 @@ host_database::host_database(long data_size, int dimension) {
 
 }
 
+
 void host_database::fill_database() {
     //--------------Initializing the input arrays..............
+    allocate();
     #pragma omp parallel for
     for (int i=0;i<this->num_batches; i++) {
         fill_with_random_doubles(host_database_B[i], batch_size * dimension);

@@ -18,6 +18,7 @@ public:
 
 public:
     host_database(long, int);
+    void allocate();
     void fill_database();
     void _free();
 
