@@ -14,12 +14,13 @@
 class database_reader {
     int num_threads;
     std::vector<ProgramBatch> list_of_batches;
+    float **host_database_B, **host_database_A, **host_database_prob_Y;
 
 
 public:
     database_reader(int,int,int);
     void read(int);
-
+    void get_as_double_pointer();
 };
 
 

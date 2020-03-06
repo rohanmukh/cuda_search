@@ -20,7 +20,23 @@ void database_reader::read(int num_jsons) {
         auto batch = list_of_batches.at(thread_id);
         std::string file_name = "Program_output_" + std::to_string(j+1) + ".json";
         batch.read_single_database_json(file_name);
-
         std::cout << "JSON " << j << " has " << batch.num_programs << " elements." << std::endl;
     }
+}
+
+
+void database_reader::get_as_double_pointer() {
+
+    int num_batches = list_of_batches.size();
+    host_database_B = (float**)malloc(num_batches * sizeof(float*)); //new float[data_size * dimension];
+    host_database_A = (float**)malloc(num_batches * sizeof(float*)); //new float[dimension];
+    host_database_prob_Y = (float**)malloc(num_batches * sizeof(float*)); //new float[dimension];
+
+    int i = 0;
+    for(ProgramBatch& batch : list_of_batches){
+        host_database_B[i] = batch.json_database_B;
+        host_database_A[i] = batch.json_database_A;
+        host_database_prob_Y[i] = batch.json_database_prob_Y;
+    }
+    return;
 }

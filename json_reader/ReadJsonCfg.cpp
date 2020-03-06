@@ -12,7 +12,7 @@ int main()
 {
     auto* db_read = new database_reader(NUM_THREADS, DATA_SIZE, DIMENSION);
     db_read->read(NUM_JSONS);
-
+    db_read->get_as_double_pointer();
 
 }
 
