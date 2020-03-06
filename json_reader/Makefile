@@ -19,13 +19,13 @@ CPPFLAGS += \
 LDLIBS = \
 		 -ljsoncpp
 
-LDFLAGS += -L/usr/local/lib $(LDLIBS)
+LDFLAGS += -fopenmp -L/usr/local/lib $(LDLIBS)
 
 all: $(PROG)
 	@echo $(PROG) compilation success!
 
 SRCS = \
-	ReadJsonCfg.cpp Program.cpp ProgramBatch.cpp
+	ReadJsonCfg.cpp Program.cpp ProgramBatch.cpp database_reader.cpp
 OBJS=$(subst .cc,.o, $(subst .cpp,.o, $(SRCS)))
 
 $(PROG): $(OBJS)
