@@ -23,8 +23,8 @@ query_holder::query_holder(int dimension) {
 
     /*allocating the memory for each matrix */
 
-    host_query_B = (double*)malloc(dimension * sizeof(double)); //new double[device_num_batches * dimension];
-    host_query_A = (double*)malloc(sizeof(double)); //new double[dimension];
+    host_query_B = (float*)malloc(dimension * sizeof(float)); //new double[device_num_batches * dimension];
+    host_query_A = (float*)malloc(sizeof(float)); //new double[dimension];
 
 
     // ---------------checking host memory  for error..............................

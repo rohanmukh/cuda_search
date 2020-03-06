@@ -52,20 +52,20 @@ void single_gpu_manager::allocate_memory() {
 }
 
 
-void single_gpu_manager::copy_data_to_device(long offset, double* host_database_B, double* host_database_A, double* host_database_probY) {
+void single_gpu_manager::copy_data_to_device(long offset, float* host_database_B, float* host_database_A, float* host_database_probY) {
     //moving data from CPU to GPU
     CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_B + offset*dimension), (void*)host_database_B, batch_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
     CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_A + offset), (void*)host_database_A, batch_size * sizeof(double), cudaMemcpyHostToDevice));
     CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_probY + offset), (void*)host_database_probY, batch_size * sizeof(double), cudaMemcpyHostToDevice));
 }
 
-void single_gpu_manager::copy_input_to_device(double* host_input_B, double* host_input_A) {
+void single_gpu_manager::copy_input_to_device(float* host_input_B, float* host_input_A) {
     //moving data from CPU to GPU
     CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_B, (void*)host_input_B, dimension * sizeof(double) , cudaMemcpyHostToDevice));
     CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_A, (void*)host_input_A, sizeof(double), cudaMemcpyHostToDevice));
 }
 
-void single_gpu_manager::copy_result_to_host(double *host_ResVect) {
+void single_gpu_manager::copy_result_to_host(float *host_ResVect) {
     //retriving result from device
     CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_result_vector, device_data_size * sizeof(double), cudaMemcpyDeviceToHost));
 }

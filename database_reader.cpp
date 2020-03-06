@@ -25,9 +25,10 @@ void database_reader::read(int num_jsons) {
 }
 
 
-void database_reader::get_as_double_pointer() {
+void database_reader::reorganize() {
 
-    int num_batches = list_of_batches.size();
+    num_batches = list_of_batches.size();
+    batch_size = list_of_batches.at(0).num_programs;
     host_database_B = (float**)malloc(num_batches * sizeof(float*)); //new float[data_size * dimension];
     host_database_A = (float**)malloc(num_batches * sizeof(float*)); //new float[dimension];
     host_database_prob_Y = (float**)malloc(num_batches * sizeof(float*)); //new float[dimension];
@@ -37,6 +38,20 @@ void database_reader::get_as_double_pointer() {
         host_database_B[i] = batch.json_database_B;
         host_database_A[i] = batch.json_database_A;
         host_database_prob_Y[i] = batch.json_database_prob_Y;
+        i++;
     }
     return;
+}
+
+void database_reader::_free(){
+    int i=0;
+    for(ProgramBatch& batch : list_of_batches){
+        free(host_database_B[i]);
+        free(host_database_A[i]);
+        free(host_database_prob_Y[i]);
+        i++;
+    }
+    free(host_database_B);
+    free(host_database_A);
+    free(host_database_prob_Y);
 }

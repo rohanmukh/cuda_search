@@ -21,15 +21,15 @@ class gpu_manager {
     int dimension;
     int num_devices;
     std::vector<single_gpu_manager*> list_of_users;
-    double* result_vector;
+    float* result_vector;
 
 public:
     gpu_manager(int, long, int);
     void top_k(int k=10);
     long compute_device_num_batch_offset(int);
-    void copy_database_to_device(double**, double**, double**);
-    void add_query(double* , double* );
-    double *get_result();
+    void copy_database_to_device(float**, float**, float**);
+    void add_query(float* , float* );
+    float *get_result();
     void search();
     void _free();
 };

@@ -37,14 +37,14 @@ double calculate_gflops(double &Tsec, long size)
 
 
 /*Fill in the vector with double precision values */
-void fill_with_random_doubles(double* vec, long size)
+void fill_with_random_doubles(float* vec, long size)
 {
     for(int ind=0;ind<size;ind++)
         vec[ind]=drand48();
 }
 
 /*Fill in the vector with double precision values */
-void fill_with_constant(double* vec, long size, double constant)
+void fill_with_constant(float* vec, long size, float constant)
 {
     for(int ind=0;ind<size;ind++)
         vec[ind]=constant;

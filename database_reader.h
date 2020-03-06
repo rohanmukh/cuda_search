@@ -12,15 +12,20 @@
 #include "ProgramBatch.h"
 
 class database_reader {
-    int num_threads;
     std::vector<ProgramBatch> list_of_batches;
+
+public:
+    int num_threads;
     float **host_database_B, **host_database_A, **host_database_prob_Y;
 
+public:
+    int num_batches, batch_size;
 
 public:
     database_reader(int,int,int);
     void read(int);
-    void get_as_double_pointer();
+    void reorganize();
+    void _free();
 };
 
 

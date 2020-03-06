@@ -19,9 +19,9 @@ private:
     int dimension;
 
     // data
-    double *device_database_B, *device_database_A, *device_database_probY;
-    double *device_input_B, *device_input_A;
-    double *device_result_vector;
+    float *device_database_B, *device_database_A, *device_database_probY;
+    float *device_input_B, *device_input_A;
+    float *device_result_vector;
 
     // device
     int device_id;
@@ -36,9 +36,9 @@ public:
 
     //data
     void allocate_memory();
-    void copy_data_to_device(long, double*, double*, double*);
-    void copy_input_to_device(double*, double*);
-    void copy_result_to_host(double*);
+    void copy_data_to_device(long, float*, float*, float*);
+    void copy_input_to_device(float*, float*);
+    void copy_result_to_host(float*);
     void _free();
 
     // device

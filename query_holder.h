@@ -11,7 +11,7 @@ class query_holder {
 
 public:
 
-    double *host_query_B, *host_query_A;
+    float *host_query_B, *host_query_A;
 
 public:
     explicit query_holder(int);

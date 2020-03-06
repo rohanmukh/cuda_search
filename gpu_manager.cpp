@@ -22,7 +22,7 @@ gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
     for(int i=0; i<this->num_devices; i++)
         this->list_of_users.push_back(new single_gpu_manager(i, device_num_batches, batch_size, dimension));
 
-    result_vector = (double*)malloc(num_batches * batch_size * sizeof(double)); // new double[data_size];
+    result_vector = (float*)malloc(num_batches * batch_size * sizeof(float)); // new double[data_size];
     if(result_vector == nullptr)
         mem_error("result_vector", "vectmatmul", device_num_batches * batch_size, "double");
 
@@ -33,7 +33,7 @@ gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
 //    list_of_users.at(device_id) = new single_gpu_manager(device_id, device_num_batches, dimension);
 //}
 
-void gpu_manager::copy_database_to_device(double** host_database_B, double** host_database_A, double** host_database_prob_Y) {
+void gpu_manager::copy_database_to_device(float** host_database_B, float** host_database_A, float** host_database_prob_Y) {
     // std::cout << "================================Copying database to all GPUs======================================\n" << std::endl;
     for(int i=0; i<list_of_users.size(); i++){
         long offset = compute_device_num_batch_offset(i);
@@ -45,7 +45,7 @@ void gpu_manager::copy_database_to_device(double** host_database_B, double** hos
 }
 
 
-void gpu_manager::add_query(double* host_input_B, double* host_input_A) {
+void gpu_manager::add_query(float* host_input_B, float* host_input_A) {
     // std::cout << "=================================Copying query to all GPUs======================================\n" << std::endl;
     for(int i=0; i<list_of_users.size(); i++){
         list_of_users.at(i)->set_device(i,"Input Copy");
@@ -97,6 +97,6 @@ void gpu_manager::_free() {
     // std::cout << std::endl;
 }
 
-double *gpu_manager::get_result(){
+float *gpu_manager::get_result(){
     return result_vector;
 }
