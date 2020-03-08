@@ -9,8 +9,8 @@
 #include <chrono>
 #include <iostream>
 
-cpu_manager::cpu_manager( long num_batches, long batch_size, int dimension, double **host_database_B,
-                         double **host_database_A, double **host_database_probY) {
+cpu_manager::cpu_manager( long num_batches, long batch_size, int dimension, float **host_database_B,
+                         float **host_database_A, float **host_database_probY) {
     this->batch_size = batch_size;
     this->dimension = dimension;
     this->num_batches = num_batches;
@@ -20,13 +20,13 @@ cpu_manager::cpu_manager( long num_batches, long batch_size, int dimension, doub
     this->host_database_probY = host_database_probY;
 
 
-    this->result_vector = (double *) malloc(num_batches * batch_size *  sizeof(double));
+    this->result_vector = (float *) malloc(num_batches * batch_size *  sizeof(float));
     if (result_vector == nullptr)
-        mem_error("result_vector", "vectmatmul", batch_size, "double");
+        mem_error("result_vector", "vectmatmul", batch_size, "float");
 }
 
 
-void cpu_manager::add_query( double *_host_input_B, double* _host_input_A) {
+void cpu_manager::add_query( float *_host_input_B, float* _host_input_A) {
     this->host_input_B = _host_input_B;
     this->host_input_A = _host_input_A;
 }
@@ -56,12 +56,12 @@ void cpu_manager::search() {
         }
     }
     auto stop = std::chrono::steady_clock::now();
-    double time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
-    double gflops = calculate_gflops(time, batch_size * dimension);
+    float time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
+    float gflops = calculate_gflops(time, batch_size * dimension);
     print_on_screen("CPU Search", time, gflops, batch_size * dimension, 1);
 }
 
-double *cpu_manager::get_result() {
+float *cpu_manager::get_result() {
     return this->result_vector;
 }
 

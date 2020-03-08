@@ -43,31 +43,31 @@ void single_gpu_manager::set_device(int _device_id, const std::string& message="
 
 void single_gpu_manager::allocate_memory() {
     //allocating memory on GPU
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_B, device_data_size * dimension * sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_A, device_data_size * sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_probY, device_data_size * sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_B, dimension * sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_A, sizeof(double)));
-    CUDA_SAFE_CALL(cudaMalloc((void**)&device_result_vector, device_data_size * sizeof(double)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_B, device_data_size * dimension * sizeof(float)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_A, device_data_size * sizeof(float)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_database_probY, device_data_size * sizeof(float)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_B, dimension * sizeof(float)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_input_A, sizeof(float)));
+    CUDA_SAFE_CALL(cudaMalloc((void**)&device_result_vector, device_data_size * sizeof(float)));
 }
 
 
 void single_gpu_manager::copy_data_to_device(long offset, float* host_database_B, float* host_database_A, float* host_database_probY) {
     //moving data from CPU to GPU
-    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_B + offset*dimension), (void*)host_database_B, batch_size * dimension * sizeof(double) , cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_A + offset), (void*)host_database_A, batch_size * sizeof(double), cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_probY + offset), (void*)host_database_probY, batch_size * sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_B + offset*dimension), (void*)host_database_B, batch_size * dimension * sizeof(float) , cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_A + offset), (void*)host_database_A, batch_size * sizeof(float), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)(device_database_probY + offset), (void*)host_database_probY, batch_size * sizeof(float), cudaMemcpyHostToDevice));
 }
 
 void single_gpu_manager::copy_input_to_device(float* host_input_B, float* host_input_A) {
     //moving data from CPU to GPU
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_B, (void*)host_input_B, dimension * sizeof(double) , cudaMemcpyHostToDevice));
-    CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_A, (void*)host_input_A, sizeof(double), cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_B, (void*)host_input_B, dimension * sizeof(float) , cudaMemcpyHostToDevice));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)device_input_A, (void*)host_input_A, sizeof(float), cudaMemcpyHostToDevice));
 }
 
 void single_gpu_manager::copy_result_to_host(float *host_ResVect) {
     //retriving result from device
-    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_result_vector, device_data_size * sizeof(double), cudaMemcpyDeviceToHost));
+    CUDA_SAFE_CALL(cudaMemcpy((void*)host_ResVect, (void*)device_result_vector, device_data_size * sizeof(float), cudaMemcpyDeviceToHost));
 }
 
 void single_gpu_manager::_free() {
@@ -88,11 +88,11 @@ void single_gpu_manager::start_event() {
     CUDA_SAFE_CALL(cudaEventCreate (&stop));
 }
 
-double single_gpu_manager::stop_event() {
+float single_gpu_manager::stop_event() {
     CUDA_SAFE_CALL(cudaEventRecord (stop, 0));
     CUDA_SAFE_CALL(cudaEventSynchronize (stop));
     CUDA_SAFE_CALL(cudaEventElapsedTime ( &elapsedTime, start, stop));
-    double Tsec= 1.0e-3*elapsedTime; // time in seconds
+    float Tsec= 1.0e-3*elapsedTime; // time in seconds
     return Tsec;
 }
 

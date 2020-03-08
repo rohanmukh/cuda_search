@@ -10,16 +10,16 @@ class cpu_manager {
     private:
         long batch_size, num_batches;
         int dimension;
-        double **host_database_B, **host_database_A, **host_database_probY;
-        double *host_input_B, *host_input_A;
-        double *result_vector;
+        float **host_database_B, **host_database_A, **host_database_probY;
+        float *host_input_B, *host_input_A;
+        float *result_vector;
 
 
     public:
-    cpu_manager(long, long, int, double**, double**, double**);
-    void add_query(double*, double*);
+    cpu_manager(long, long, int, float**, float**, float**);
+    void add_query(float*, float*);
     void search();
-    double *get_result();
+    float *get_result();
     void _free();
 };
 

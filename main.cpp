@@ -27,7 +27,7 @@
 #include "database_reader.h"
 
 #define DIMENSION 256
-#define DATA_SIZE 1000000
+#define DATA_SIZE 100000
 #define NUM_JSONS 1
 #define NUM_THREADS 32
 
