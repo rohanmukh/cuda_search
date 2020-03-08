@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b221e6c2-40f3-46fb-9eb7-aa61c41fb22c" name="ubuntu@3.86.112.197" url="http://3.86.112.197">
+        <fileTransfer host="3.86.112.197" port="22" privateKey="$USER_HOME$/Research/Rohan_VPC.pem" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
