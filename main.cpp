@@ -29,7 +29,7 @@
 #define DIMENSION 256
 #define DATA_SIZE 1000000
 #define NUM_JSONS 1
-#define NUM_THREADS 32
+#define NUM_THREADS 1
 
 /*main function*/
 int main()
@@ -50,6 +50,7 @@ int main()
     query->fill_input_query();
 
 
+    std::cout << host_db->num_batches  << std::endl ;
     auto* gpu_user = new gpu_manager(host_db->num_batches, host_db->batch_size, dimension);
     gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
                                       host_db->host_database_prob_Y

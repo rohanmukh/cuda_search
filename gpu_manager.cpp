@@ -14,7 +14,7 @@ gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
     this->batch_size = batch_size;
     // get number of devices
     this->num_devices = get_DeviceCount();
-
+    std::cout << this->num_devices << std::endl;
     assert(num_batches % this->num_devices == 0);
     this->device_num_batches = num_batches / this->num_devices;
 
