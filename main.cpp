@@ -28,7 +28,7 @@
 
 #define DIMENSION 256
 #define DATA_SIZE 1000000
-# define NUM_JSONS 1
+#define NUM_JSONS 1
 #define NUM_THREADS 32
 
 /*main function*/
@@ -74,5 +74,5 @@ int main()
     gpu_user->_free();
 //    cpu_user->_free();
 
-    return 0;
+//    return 0;
 }// end of main

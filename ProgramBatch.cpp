@@ -12,7 +12,7 @@ ProgramBatch::ProgramBatch(int data_size, int dimension){
     json_database_prob_Y = (float*)malloc(data_size * sizeof(float)); //new float[dimension];
 }
 
-void ProgramBatch::read_single_database_json(std::string file_name){
+void ProgramBatch::read_single_database_json(const std::string file_name){
     Json::Value single_db;
     std::ifstream cfgfile(file_name);
     cfgfile >> single_db;
