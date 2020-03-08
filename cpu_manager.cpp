@@ -56,8 +56,8 @@ void cpu_manager::search() {
         }
     }
     auto stop = std::chrono::steady_clock::now();
-    float time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
-    float gflops = calculate_gflops(time, batch_size * dimension);
+    double time = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
+    double gflops = calculate_gflops(time, batch_size * dimension);
     print_on_screen("CPU Search", time, gflops, batch_size * dimension, 1);
 }
 

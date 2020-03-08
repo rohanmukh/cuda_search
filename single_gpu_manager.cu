@@ -88,11 +88,11 @@ void single_gpu_manager::start_event() {
     CUDA_SAFE_CALL(cudaEventCreate (&stop));
 }
 
-float single_gpu_manager::stop_event() {
+double single_gpu_manager::stop_event() {
     CUDA_SAFE_CALL(cudaEventRecord (stop, 0));
     CUDA_SAFE_CALL(cudaEventSynchronize (stop));
     CUDA_SAFE_CALL(cudaEventElapsedTime ( &elapsedTime, start, stop));
-    float Tsec= 1.0e-3*elapsedTime; // time in seconds
+    double Tsec= 1.0e-3*elapsedTime; // time in seconds
     return Tsec;
 }
 

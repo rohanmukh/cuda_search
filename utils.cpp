@@ -51,7 +51,7 @@ void fill_with_constant(float* vec, long size, float constant)
 }
 
 /* function to calculate relative error*/
-void relative_error(double* dRes, double* hRes, long size)
+void relative_error(float* dRes, float* hRes, long size)
 {
     double relativeError,errorNorm=0.0;
     int flag=0;
