@@ -11,7 +11,7 @@ void mem_error(const std::string& arrayname, const std::string& benchmark, long 
 void print_on_screen(const std::string& program_name,double tsec,double gflops,long size,int flag);
 void fill_with_random_doubles(float* vec, long size);
 void fill_with_constant(float* vec, long size, float constant);
-void relative_error(double* dRes, double* hRes, long size);
+void relative_error(float* dRes, float* hRes, long size);
 double calculate_gflops(double &Tsec, long size);
 
 #endif //CUDA_CODE_SEARCH_UTILS_H
