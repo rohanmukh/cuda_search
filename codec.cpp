@@ -20,10 +20,10 @@ codec::codec( int data_size_per_batch, int dimension, int num_jsons){
                                       host_db->host_database_prob_Y
     );
 
-    cpu_user = new cpu_manager(
-            host_db->num_batches, host_db->batch_size, dimension, host_db->host_database_B,
-            host_db->host_database_A, host_db->host_database_prob_Y
-    );
+    //cpu_user = new cpu_manager(
+    //        host_db->num_batches, host_db->batch_size, dimension, host_db->host_database_B,
+    //        host_db->host_database_A, host_db->host_database_prob_Y
+    //);
     //    auto *host_db = new host_database(NUM_BATCHES * DATA_SIZE_PER_BATCH, DIMENSION);
     //    host_db->fill_database();
 
@@ -34,13 +34,17 @@ codec::codec( int data_size_per_batch, int dimension, int num_jsons){
 void codec::search(float *host_query_B, float *host_query_A){
     gpu_user->add_query(host_query_B, host_query_A);
     gpu_user->search();
-    std::vector<std::tuple<int, int>> top_prog_ids =  gpu_user->top_k();
-    for(std::tuple<int,int> prog_id : top_prog_ids){
+    std::vector<std::tuple<int, int, float>> top_prog_ids =  gpu_user->top_k();
+    int i=0;
+    for(std::tuple<int,int, float> prog_id : top_prog_ids){
         int batch_id = std::get<0>(prog_id);
         int batch_prog_id = std::get<1>(prog_id);
+        float prob = std::get<2>(prog_id);
         Program* p = host_db->get_program(batch_id, batch_prog_id);
-        std::cout << batch_id << " " << batch_prog_id << std::endl;
+        std::cout << " Rank :: " << ++i << std::endl;
+        std::cout << " Probability :: " << prob << std::endl;
         std::cout << p->get_body() << std::endl;
+        
     }
     return;
 }
@@ -56,5 +60,5 @@ void codec::verify(float *host_query_B, float *host_query_A){
 void codec::_free(){
     host_db->_free();
     gpu_user->_free();
-    cpu_user->_free();
+    //cpu_user->_free();
 }

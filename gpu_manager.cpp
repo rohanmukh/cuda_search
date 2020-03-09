@@ -30,9 +30,6 @@ gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
 }
 
 
-//void gpu_manager::add_user(int device_id){
-//    list_of_users.at(device_id) = new single_gpu_manager(device_id, device_num_batches, dimension);
-//}
 
 void gpu_manager::copy_database_to_device(float** host_database_B, float** host_database_A, float** host_database_prob_Y) {
     // std::cout << "================================Copying database to all GPUs======================================\n" << std::endl;
@@ -75,20 +72,16 @@ void gpu_manager::search() {
 
 }
 
-std::vector<std::tuple<int, int>> gpu_manager::top_k(int k){
+std::vector<std::tuple<int, int, float>> gpu_manager::top_k(int k){
       auto start = std::chrono::steady_clock::now();
       std::vector<float> myvector (result_vector, result_vector + num_devices * device_num_batches * batch_size);
       
       std::vector<size_t> indices = partial_sort_indexes(myvector, k);
-      std::vector<std::tuple<int, int>> prog_ids;
+      std::vector<std::tuple<int, int, float>> prog_ids;
       for(size_t id: indices){
-         //int device_id = id/(batch_size*device_num_batches);
-         //int device_batch_id = (id % (batch_size*device_num_batches) )/(batch_size);
-         //int batch_id = (id % (batch_size*device_num_batches) )%(batch_size);
-
          int batch_id = id/(batch_size);
          int prog_id = (id) %(batch_size);
-         prog_ids.push_back( std::make_tuple(batch_id, prog_id));
+         prog_ids.push_back( std::make_tuple(batch_id, prog_id, myvector.at(id)  ));
       }
       auto stop = std::chrono::steady_clock::now();
       double time_sec = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;

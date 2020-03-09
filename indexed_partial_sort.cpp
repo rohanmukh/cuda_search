@@ -17,7 +17,7 @@ vector<size_t> partial_sort_indexes(const vector<T> &v, int k) {
   // to avoid unnecessary index re-orderings
   // when v contains elements of equal values 
   partial_sort(idx.begin(), idx.begin()+k, idx.end(),
-       [&v](size_t i1, size_t i2) {return v[i1] < v[i2];});
+       [&v](size_t i1, size_t i2) {return v[i1] > v[i2];});
 
   idx.resize(k);
   return idx;

@@ -9,7 +9,7 @@
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <netinet/in.h>
-#include <string.h>
+#include <string>
 #define PORT 8080
 
 class server {
@@ -18,7 +18,6 @@ class server {
     int opt = 1;
     int addrlen = sizeof(address);
     char buffer[1024] = {0};
-    char *hello = "Hello from server";
 
 public:
     server();

@@ -47,8 +47,9 @@ void server::unblock_and_run() {
         perror("accept");
         exit(EXIT_FAILURE);
     }
+    std::string hello = "hello from server";
     valread = read( new_socket , buffer, 1024);
     printf("%s\n",buffer );
-    send(new_socket , hello , strlen(hello) , 0 );
+    send(new_socket , hello.c_str() , hello.length() , 0 );
     printf("Hello message sent\n");
 }

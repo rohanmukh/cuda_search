@@ -26,7 +26,7 @@ class gpu_manager {
 
 public:
     gpu_manager(int, long, int);
-    std::vector<std::tuple<int, int>> top_k(int k=10);
+    std::vector<std::tuple<int, int, float>> top_k(int k=10);
     long compute_device_num_batch_offset(int);
     void copy_database_to_device(float**, float**, float**);
     void add_query(float* , float* );

@@ -43,10 +43,10 @@ int main()
     while (true){
         _server->unblock_and_run();
         
-//        std::cout << "Filling with random query" << std::endl;
+        //std::cout << "Filling with random query" << std::endl;
         query->read_input_json(todo_log_path);
         system->search(query->host_query_B, query->host_query_A);
-        system->verify(query->host_query_B, query->host_query_A);
+        //system->verify(query->host_query_B, query->host_query_A);
     }
 
     // Free Memory

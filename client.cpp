@@ -26,7 +26,8 @@ int client::send_query(){
         printf("\nConnection Failed \n");
         return -1;
     }
-    send(sock , hello , strlen(hello) , 0 );
+    std::string hello = "hello from client";
+    send(sock , hello.c_str() , hello.length() , 0 );
     printf("Hello message sent\n");
     valread = read( sock , buffer, 1024);
     printf("%s\n",buffer );
