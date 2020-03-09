@@ -11,6 +11,18 @@ void query_holder::fill_input_query() {
     fill_with_constant(host_query_A, 1, -0.5);
 }
 
+void query_holder::read_input_json(const std::string file_name){
+    Json::Value single_input;
+    std::ifstream cfgfile(file_name);
+    cfgfile >> single_input;
+
+    Json::Value &program = single_input["programs"];
+    host_query_A[0] = program["eAs"].asFloat();
+    int d = 0;
+    for (auto b: program["eBs"])
+        host_query_B[d++] = b.asFloat();
+}
+
 void query_holder::_free() {
     //free host memory----------
     free(host_query_B);

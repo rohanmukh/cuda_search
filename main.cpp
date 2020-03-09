@@ -30,6 +30,7 @@
 #define DATA_SIZE_PER_BATCH 100000
 #define NUM_JSONS 16
 
+std::string todo_log_path = "/home/ubuntu/cuda_search/encoder_op.json";
 /*main function*/
 int main()
 {
@@ -42,8 +43,8 @@ int main()
     while (true){
         _server->unblock_and_run();
         
-        std::cout << "Filling with random query" << std::endl;
-        query->fill_input_query();
+//        std::cout << "Filling with random query" << std::endl;
+        query->read_input_json(todo_log_path);
         system->search(query->host_query_B, query->host_query_A);
         system->verify(query->host_query_B, query->host_query_A);
     }
