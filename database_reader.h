@@ -12,7 +12,7 @@
 #include "ProgramBatch.h"
 
 class database_reader {
-    std::vector<ProgramBatch> list_of_batches;
+    std::vector<ProgramBatch*> list_of_batches;
 
 public:
     int num_threads;

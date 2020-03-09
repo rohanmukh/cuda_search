@@ -12,7 +12,7 @@ host_database::host_database(long data_size, int dimension) {
     this->dimension = dimension;
     this->data_size = data_size;
 
-    this->num_batches = 64;
+    this->num_batches = 1;
     this->batch_size = this->data_size/this->num_batches;
 
     host_database_B = (float**)malloc(num_batches * sizeof(float*)); //new float[data_size * dimension];

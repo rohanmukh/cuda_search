@@ -27,7 +27,7 @@
 #include "database_reader.h"
 
 #define DIMENSION 256
-#define DATA_SIZE 640000
+#define DATA_SIZE 100000
 #define NUM_JSONS 1
 #define NUM_THREADS 1
 
@@ -38,12 +38,12 @@ int main()
     int dimension = DIMENSION;
 //    long data_size = DATA_SIZE;
 
-    auto *host_db = new host_database(DATA_SIZE, dimension);
-    host_db->fill_database();
+//    auto *host_db = new host_database(DATA_SIZE, dimension);
+//    host_db->fill_database();
 
-    //auto* host_db = new database_reader(NUM_THREADS, DATA_SIZE, DIMENSION);
-    //host_db->read(NUM_JSONS);
-    //host_db->reorganize();
+    auto* host_db = new database_reader(NUM_THREADS, DATA_SIZE, DIMENSION);
+    host_db->read(NUM_JSONS);
+    host_db->reorganize();
 
 
     auto *query = new query_holder(dimension);
