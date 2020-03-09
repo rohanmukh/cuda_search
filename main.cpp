@@ -19,12 +19,9 @@
 
 
 #include <iostream>
-#include "cpu_manager.h"
 #include "utils.h"
-#include "gpu_manager.h"
-#include "host_database.h"
+#include "codec.h"
 #include "query_holder.h"
-#include "database_reader.h"
 #include <tuple>
 
 #define DIMENSION 256
@@ -37,52 +34,19 @@
 /*main function*/
 int main()
 {
-    // Vector length , Matrix Row and Col sizes..............
-    int dimension = DIMENSION;
 
-//    auto *host_db = new host_database(NUM_BATCHES * DATA_SIZE_PER_BATCH, dimension);
-//    host_db->fill_database();
-
-    auto* host_db = new database_reader(NUM_BATCHES, DATA_SIZE_PER_BATCH, DIMENSION);
-    host_db->read(NUM_JSONS);
-    host_db->reorganize();
+    auto* system = new codec( NUM_BATCHES,  DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
+    auto* query = new query_holder(DIMENSION);
 
 
-    auto *query = new query_holder(dimension);
-    query->fill_input_query();
+    system->search(query->host_query_B, query->host_query_A);
+    system->verify(query->host_query_B, query->host_query_A);
 
 
-    auto* gpu_user = new gpu_manager(host_db->num_batches, host_db->batch_size, dimension);
-    gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
-                                      host_db->host_database_prob_Y
-                                      );
-
-    gpu_user->add_query(query->host_query_B, query->host_query_A);
-    gpu_user->search();
-    std::vector<std::tuple<int, int>> top_prog_ids =  gpu_user->top_k();
-    for(std::tuple<int,int> prog_id : top_prog_ids){
-       int batch_id = std::get<0>(prog_id);
-       int batch_prog_id = std::get<1>(prog_id); 
-       Program* p = host_db->get_program(batch_id, batch_prog_id);      
-       std::cout << batch_id << " " << batch_prog_id << std::endl;
-       std::cout << p->get_body() << std::endl;
-       
-    }
-
-    auto *cpu_user = new cpu_manager(
-            host_db->num_batches, host_db->batch_size, dimension, host_db->host_database_B,
-            host_db->host_database_A, host_db->host_database_prob_Y
-            );
-    cpu_user->add_query(query->host_query_B, query->host_query_A);
-    cpu_user->search();
-
-    relative_error(cpu_user->get_result(), gpu_user->get_result(), DATA_SIZE_PER_BATCH);
 
     // Free Memory
-    host_db->_free();
     query->_free();
-    gpu_user->_free();
-    cpu_user->_free();
+    system->_free();
 
 //    return 0;
 }// end of main
