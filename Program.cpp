@@ -14,3 +14,7 @@ Program::Program(int dimension, Json::Value &program_json, float* A, float* B_ve
     for (auto b: program_json["b2"])
         B_vec[d++] = std::stof(b.asString());
 }
+
+std::string Program::get_body(){
+    return body;
+}

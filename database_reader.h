@@ -26,6 +26,7 @@ public:
     void read(int);
     void reorganize();
     void _free();
+    Program* get_program(int,int);
 };
 
 

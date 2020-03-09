@@ -61,7 +61,12 @@ int main()
     gpu_user->search();
     std::vector<std::tuple<int, int>> top_prog_ids =  gpu_user->top_k();
     for(std::tuple<int,int> prog_id : top_prog_ids){
-       std::cout << std::get<0>(prog_id) << " " << std::get<1>(prog_id) << std::endl;
+       int batch_id = std::get<0>(prog_id);
+       int batch_prog_id = std::get<1>(prog_id); 
+       Program* p = host_db->get_program(batch_id, batch_prog_id);      
+       std::cout << batch_id << " " << batch_prog_id << std::endl;
+       std::cout << p->get_body() << std::endl;
+       
     }
 
     auto *cpu_user = new cpu_manager(

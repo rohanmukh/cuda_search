@@ -17,10 +17,14 @@ void ProgramBatch::read_single_database_json(const std::string file_name){
     std::ifstream cfgfile(file_name);
     cfgfile >> single_db;
 
-    std::vector<Program*> list_of_programs;
     for (Json::Value &program: single_db["programs"]){
         auto temp = new Program(this->dimension, program, json_database_A+num_programs, json_database_B + num_programs*dimension, json_database_prob_Y+num_programs );
         list_of_programs.push_back(temp);
         num_programs++;
     }
+}
+
+
+Program* ProgramBatch::get_program(int id){
+    return list_of_programs.at(id);
 }

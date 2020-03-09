@@ -55,3 +55,8 @@ void database_reader::_free(){
     free(host_database_A);
     free(host_database_prob_Y);
 }
+
+Program* database_reader::get_program(int batch_id ,int batch_prog_id){
+    return list_of_batches.at(batch_id)->get_program(batch_prog_id);
+
+}

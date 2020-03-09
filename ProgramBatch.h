@@ -16,6 +16,7 @@ class ProgramBatch {
 public:
     int dimension;
     int num_programs;
+    std::vector<Program*> list_of_programs;
 
 public:
     float *json_database_B, *json_database_A, *json_database_prob_Y;
@@ -24,6 +25,8 @@ public:
     ProgramBatch(int, int);
 
     void read_single_database_json(const std::string);
+    Program* get_program(int);
+
 };
 
 
