@@ -21,6 +21,7 @@
 #include <iostream>
 #include "utils.h"
 #include "codec.h"
+#include "server.h"
 #include "query_holder.h"
 #include <tuple>
 
@@ -35,14 +36,19 @@
 int main()
 {
 
-    auto* system = new codec( NUM_BATCHES,  DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
-    auto* query = new query_holder(DIMENSION);
+    auto *system = new codec( NUM_BATCHES,  DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
+    auto *query = new query_holder(DIMENSION);
+    auto *_server =  new server();
 
+    std::cout << "Waiting for client signal" << std::endl;
+    while (true){
+        std::cout << "Filling with random query" << std::endl;
+        query->fill_input_query();
 
-    system->search(query->host_query_B, query->host_query_A);
-    system->verify(query->host_query_B, query->host_query_A);
-
-
+        _server->unblock_and_run();
+        system->search(query->host_query_B, query->host_query_A);
+        system->verify(query->host_query_B, query->host_query_A);
+    }
 
     // Free Memory
     query->_free();
