@@ -25,6 +25,7 @@
 #include "host_database.h"
 #include "query_holder.h"
 #include "database_reader.h"
+#include <tuple>
 
 #define DIMENSION 256
 
@@ -51,7 +52,6 @@ int main()
     query->fill_input_query();
 
 
-    std::cout << host_db->num_batches  << std::endl ;
     auto* gpu_user = new gpu_manager(host_db->num_batches, host_db->batch_size, dimension);
     gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
                                       host_db->host_database_prob_Y
@@ -59,7 +59,10 @@ int main()
 
     gpu_user->add_query(query->host_query_B, query->host_query_A);
     gpu_user->search();
-    gpu_user->top_k();
+    std::vector<std::tuple<int, int>> top_prog_ids =  gpu_user->top_k();
+    for(std::tuple<int,int> prog_id : top_prog_ids){
+       std::cout << std::get<0>(prog_id)/DATA_SIZE_PER_BATCH << " " << std::get<1>(prog_id)%DATA_SIZE_PER_BATCH << std::endl;
+    }
 
     auto *cpu_user = new cpu_manager(
             host_db->num_batches, host_db->batch_size, dimension, host_db->host_database_B,

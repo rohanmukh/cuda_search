@@ -3,7 +3,7 @@
 //
 
 #include "gpu_manager.h"
-
+#include "indexed_partial_sort.cpp"
 
 
 /*Get the number of GPU devices present on the host */
@@ -14,7 +14,6 @@ gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
     this->batch_size = batch_size;
     // get number of devices
     this->num_devices = get_DeviceCount();
-    std::cout << this->num_devices << std::endl;
     assert(num_batches % this->num_devices == 0);
     this->device_num_batches = num_batches / this->num_devices;
 
@@ -22,6 +21,8 @@ gpu_manager::gpu_manager(int num_batches, long batch_size, int dimension){
     for(int i=0; i<this->num_devices; i++)
         this->list_of_users.push_back(new single_gpu_manager(i, device_num_batches, batch_size, dimension));
 
+
+    std::cout << num_batches*batch_size << std::endl;
     result_vector = (float*)malloc(num_batches * batch_size * sizeof(float)); // new float[data_size];
     if(result_vector == nullptr)
         mem_error("result_vector", "vectmatmul", device_num_batches * batch_size, "float");
@@ -74,20 +75,27 @@ void gpu_manager::search() {
 
 }
 
-void gpu_manager::top_k(int k){
+std::vector<std::tuple<int, int>> gpu_manager::top_k(int k){
       auto start = std::chrono::steady_clock::now();
       //std::cout << "Start" << std::endl;
       std::vector<float> myvector (result_vector, result_vector + device_num_batches * batch_size);
       //std::cout << "Create" << std::endl;
 
-      //for (auto &i: myvector)
-      //    std::cout<< i << std::endl;
 
-      std::partial_sort (myvector.begin(), myvector.begin()+k, myvector.end(), [](int a, int b) {return a > b; });
+      //std::partial_sort (myvector.begin(), myvector.begin()+k, myvector.end(), [](int a, int b) {return a > b; });
+      
+      std::vector<size_t> indices = partial_sort_indexes(myvector, k);
+     
+      std::vector<std::tuple<int, int>> prog_ids;
+      for(size_t id: indices){
+         std::cout << "Device Id :: "<< id / batch_size << " Batch Size :: " << id % batch_size << std::endl;
+         prog_ids.push_back( std::make_tuple(id/batch_size, id%batch_size));
+      }
       auto stop = std::chrono::steady_clock::now();
       double time_sec = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
       double gflops = calculate_gflops(time_sec, device_num_batches *batch_size);
       print_on_screen("CPU Sort", time_sec, gflops, device_num_batches * batch_size * num_devices, 1);
+      return prog_ids;
 }
 
 long gpu_manager::compute_device_num_batch_offset(int device_id){
