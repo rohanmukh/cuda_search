@@ -16,11 +16,14 @@ void query_holder::read_input_json(const std::string file_name){
     std::ifstream cfgfile(file_name);
     cfgfile >> single_input;
 
-    Json::Value &program = single_input["programs"];
-    host_query_A[0] = program["eAs"].asFloat();
+
+    host_query_A[0] = single_input["encoder_ops"]["eAs"].asFloat();
+
     int d = 0;
-    for (auto b: program["eBs"])
-        host_query_B[d++] = b.asFloat();
+    for (auto b: single_input["encoder_ops"]["eBs"]){
+        host_query_B[d] = b.asFloat();
+        d++;
+    }
 }
 
 void query_holder::_free() {

@@ -85,7 +85,7 @@ std::vector<std::tuple<int, int>> gpu_manager::top_k(int k){
          //int device_id = id/(batch_size*device_num_batches);
          //int device_batch_id = (id % (batch_size*device_num_batches) )/(batch_size);
          //int batch_id = (id % (batch_size*device_num_batches) )%(batch_size);
-        
+
          int batch_id = id/(batch_size);
          int prog_id = (id) %(batch_size);
          prog_ids.push_back( std::make_tuple(batch_id, prog_id));

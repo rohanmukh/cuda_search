@@ -8,6 +8,7 @@
 #include <json/value.h>
 #include <jsoncpp/json/json.h>
 #include <fstream>
+#include <iostream>
 
 class query_holder {
     int dimension;
