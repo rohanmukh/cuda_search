@@ -28,8 +28,8 @@
 
 #define DIMENSION 256
 #define DATA_SIZE 100000
-#define NUM_JSONS 1
-#define NUM_THREADS 1
+#define NUM_JSONS 8
+#define NUM_THREADS 8
 
 /*main function*/
 int main()

@@ -20,7 +20,6 @@ void database_reader::read(int num_jsons) {
         auto batch = list_of_batches.at(thread_id);
         std::string file_name = "/home/ubuntu/DATABASE/Program_output_" + std::to_string(j+1) + ".json";
         batch->read_single_database_json(file_name);
-        std::cout << batch->json_database_prob_Y[0] << std::endl; 
         std::cout << "JSON " << j << " has " << batch->num_programs << " elements." << std::endl;
     }
 }

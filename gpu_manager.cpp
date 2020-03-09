@@ -76,12 +76,12 @@ void gpu_manager::search() {
 
 void gpu_manager::top_k(int k){
       auto start = std::chrono::steady_clock::now();
-    std::cout << "Start" << std::endl;
+      //std::cout << "Start" << std::endl;
       std::vector<float> myvector (result_vector, result_vector + device_num_batches * batch_size);
-    std::cout << "Create" << std::endl;
+      //std::cout << "Create" << std::endl;
 
-      for (auto &i: myvector)
-          std::cout<< i << std::endl;
+      //for (auto &i: myvector)
+      //    std::cout<< i << std::endl;
 
       std::partial_sort (myvector.begin(), myvector.begin()+k, myvector.end(), [](int a, int b) {return a > b; });
       auto stop = std::chrono::steady_clock::now();
