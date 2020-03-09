@@ -27,25 +27,23 @@
 
 #define DIMENSION 256
 
-#define NUM_BATCHES 8
 #define DATA_SIZE_PER_BATCH 100000
-
-#define NUM_JSONS 8
+#define NUM_JSONS 16
 
 /*main function*/
 int main()
 {
 
-    auto *system = new codec( NUM_BATCHES,  DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
+    auto *system = new codec( DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
     auto *query = new query_holder(DIMENSION);
     auto *_server =  new server();
 
     std::cout << "Waiting for client signal" << std::endl;
     while (true){
+        _server->unblock_and_run();
+        
         std::cout << "Filling with random query" << std::endl;
         query->fill_input_query();
-
-        _server->unblock_and_run();
         system->search(query->host_query_B, query->host_query_A);
         system->verify(query->host_query_B, query->host_query_A);
     }

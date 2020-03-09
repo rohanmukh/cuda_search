@@ -5,15 +5,16 @@
 #include "codec.h"
 
 
-codec::codec(int num_batches,  int data_size_per_batch, int dimension, int num_jsons){
+codec::codec( int data_size_per_batch, int dimension, int num_jsons){
 
     this->data_size_per_batch = data_size_per_batch;
 
-    host_db = new database_reader(num_batches, data_size_per_batch, dimension);
+    host_db = new database_reader(num_jsons, data_size_per_batch, dimension);
     host_db->read(num_jsons);
     host_db->reorganize();
 
 
+    //TODO: change num_batches -> is same as num_jsons
     gpu_user = new gpu_manager(host_db->num_batches, host_db->batch_size, dimension);
     gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
                                       host_db->host_database_prob_Y
