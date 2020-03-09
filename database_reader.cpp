@@ -4,10 +4,10 @@
 
 #include "database_reader.h"
 
-database_reader::database_reader(int num_threads, int data_size, int dimension){
-    this->num_threads = num_threads;
-    for (int i=0;i<num_threads;i++){
-        ProgramBatch *batch1 = new ProgramBatch(data_size, dimension);
+database_reader::database_reader(int num_batches, int data_size_per_batch, int dimension){
+    this->num_batches = num_batches;
+    for (int i=0;i<num_batches;i++){
+        ProgramBatch *batch1 = new ProgramBatch(data_size_per_batch, dimension);
         list_of_batches.push_back(batch1);
     }
 }
@@ -16,7 +16,7 @@ database_reader::database_reader(int num_threads, int data_size, int dimension){
 void database_reader::read(int num_jsons) {
     #pragma omp parallel for
     for (int j=0;j<num_jsons;j++) {
-        int thread_id = j % num_threads;
+        int thread_id = j % num_batches;
         auto batch = list_of_batches.at(thread_id);
         std::string file_name = "/home/ubuntu/DATABASE/Program_output_" + std::to_string(j+1) + ".json";
         batch->read_single_database_json(file_name);
@@ -29,9 +29,9 @@ void database_reader::reorganize() {
 
     num_batches = list_of_batches.size();
     batch_size = list_of_batches.at(0)->num_programs;
-    host_database_B = (float**)malloc(num_batches * sizeof(float*)); //new float[data_size * dimension];
-    host_database_A = (float**)malloc(num_batches * sizeof(float*)); //new float[dimension];
-    host_database_prob_Y = (float**)malloc(num_batches * sizeof(float*)); //new float[dimension];
+    host_database_B = (float**)malloc(num_batches * sizeof(float*)); 
+    host_database_A = (float**)malloc(num_batches * sizeof(float*)); 
+    host_database_prob_Y = (float**)malloc(num_batches * sizeof(float*));
 
     for(int i=0; i<num_batches;i++){
         auto batch = list_of_batches.at(i);

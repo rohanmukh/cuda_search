@@ -27,21 +27,22 @@
 #include "database_reader.h"
 
 #define DIMENSION 256
-#define DATA_SIZE 100000
+
+#define NUM_BATCHES 8
+#define DATA_SIZE_PER_BATCH 100000
+
 #define NUM_JSONS 8
-#define NUM_THREADS 8
 
 /*main function*/
 int main()
 {
     // Vector length , Matrix Row and Col sizes..............
     int dimension = DIMENSION;
-//    long data_size = DATA_SIZE;
 
-//    auto *host_db = new host_database(DATA_SIZE, dimension);
+//    auto *host_db = new host_database(NUM_BATCHES * DATA_SIZE_PER_BATCH, dimension);
 //    host_db->fill_database();
 
-    auto* host_db = new database_reader(NUM_THREADS, DATA_SIZE, DIMENSION);
+    auto* host_db = new database_reader(NUM_BATCHES, DATA_SIZE_PER_BATCH, DIMENSION);
     host_db->read(NUM_JSONS);
     host_db->reorganize();
 
@@ -58,7 +59,7 @@ int main()
 
     gpu_user->add_query(query->host_query_B, query->host_query_A);
     gpu_user->search();
-    //gpu_user->top_k();
+    gpu_user->top_k();
 
     auto *cpu_user = new cpu_manager(
             host_db->num_batches, host_db->batch_size, dimension, host_db->host_database_B,
@@ -67,7 +68,7 @@ int main()
     cpu_user->add_query(query->host_query_B, query->host_query_A);
     cpu_user->search();
 
-    relative_error(cpu_user->get_result(), gpu_user->get_result(), DATA_SIZE);
+    relative_error(cpu_user->get_result(), gpu_user->get_result(), DATA_SIZE_PER_BATCH);
 
     // Free Memory
     host_db->_free();

@@ -4,12 +4,12 @@
 
 #include "ProgramBatch.h"
 
-ProgramBatch::ProgramBatch(int data_size, int dimension){
+ProgramBatch::ProgramBatch(int data_size_per_batch, int dimension){
     this->dimension = dimension;
     this->num_programs = 0;
-    json_database_B = (float*)malloc(data_size * dimension * sizeof(float)); //new float[data_size * dimension];
-    json_database_A = (float*)malloc(data_size * sizeof(float)); //new float[dimension];
-    json_database_prob_Y = (float*)malloc(data_size * sizeof(float)); //new float[dimension];
+    json_database_B = (float*)malloc(data_size_per_batch * dimension * sizeof(float));
+    json_database_A = (float*)malloc(data_size_per_batch * sizeof(float));
+    json_database_prob_Y = (float*)malloc(data_size_per_batch * sizeof(float)); 
 }
 
 void ProgramBatch::read_single_database_json(const std::string file_name){
