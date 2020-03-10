@@ -4,9 +4,10 @@
 
 #include "codec.h"
 
-codec::codec( int data_size_per_batch, int dimension, int num_jsons, int max_devices){
+codec::codec( int data_size_per_batch, int dimension, int num_jsons){
 
     this->data_size_per_batch = data_size_per_batch;
+    this->dimension = dimension;
 
 //    host_db = new database_reader(num_jsons, data_size_per_batch, dimension);
 //    host_db->read(num_jsons);
@@ -16,10 +17,10 @@ codec::codec( int data_size_per_batch, int dimension, int num_jsons, int max_dev
     host_db->fill_database();
 
     //TODO: change num_batches -> is same as num_jsons
-    gpu_user = new gpu_manager(max_devices, host_db->num_batches, data_size_per_batch, dimension);
-    gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
-                                      host_db->host_database_prob_Y
-    );
+    //gpu_user = new gpu_manager(max_devices, host_db->num_batches, data_size_per_batch, dimension);
+    //gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
+    //                                  host_db->host_database_prob_Y
+    //);
 
     //cpu_user = new cpu_manager(
     //        host_db->num_batches, host_db->batch_size, dimension, host_db->host_database_B,
@@ -30,6 +31,17 @@ codec::codec( int data_size_per_batch, int dimension, int num_jsons, int max_dev
 
 }
 
+
+
+void codec::set_gpu_user(int num_devices){
+
+   if (gpu_user != NULL)
+       gpu_user->_free();
+   gpu_user = new gpu_manager(num_devices, host_db->num_batches, data_size_per_batch, dimension);
+   gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
+                                     host_db->host_database_prob_Y
+   );
+}
 
 
 void codec::search(float *host_query_B, float *host_query_A){

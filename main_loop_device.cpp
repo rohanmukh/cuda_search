@@ -24,12 +24,13 @@
 #include "server.h"
 #include "query_holder.h"
 #include <tuple>
+#include <cmath>
 
 #define DIMENSION 256
 
 #define DATA_SIZE_PER_BATCH 100000
 #define NUM_JSONS 280 
-#define MAX_DEVICES 8
+//#define MAX_DEVICES 8
 
 std::string todo_log_path = "/home/ubuntu/cuda_search/encoder_op.json";
 /*main function*/
@@ -37,15 +38,12 @@ int main()
 {
 
     auto *system = new codec( DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
-    system->set_gpu_user(MAX_DEVICES);
     auto *query = new query_holder(DIMENSION);
-    auto *_server =  new server();
 
-    std::cout << "Waiting for client signal" << std::endl;
-    while (true){
-        _server->unblock_and_run();
-        
-        //std::cout << "Filling with random query" << std::endl;
+    for(int i=0;i<=3;i++){
+        int num_devices = pow(2,i);
+        std::cout << "/* Running on NUM DEVICE :: " << num_devices << "*/"<< std::endl;
+        system->set_gpu_user(num_devices); 
         query->read_input_json(todo_log_path);
         system->search(query->host_query_B, query->host_query_A);
         //system->verify(query->host_query_B, query->host_query_A);

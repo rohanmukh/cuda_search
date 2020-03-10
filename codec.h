@@ -18,9 +18,10 @@ class codec {
     host_database *host_db;
     gpu_manager *gpu_user;
     cpu_manager *cpu_user;
-    int data_size_per_batch;
+    int data_size_per_batch, dimension;
 public:
-    codec(int data_size_per_batch, int dimension, int num_jsons, int max_devices);
+    codec(int data_size_per_batch, int dimension, int num_jsons);
+    void set_gpu_user(int);
     void search(float*, float*);
     void verify(float*, float*);
     void _free();
