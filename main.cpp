@@ -28,7 +28,7 @@
 #define DIMENSION 256
 
 #define DATA_SIZE_PER_BATCH 100000
-#define NUM_JSONS 8
+#define NUM_JSONS 280 
 #define MAX_DEVICES 8
 
 std::string todo_log_path = "/home/ubuntu/cuda_search/encoder_op.json";

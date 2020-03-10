@@ -59,11 +59,20 @@ void gpu_manager::search() {
         list_of_users.at(i)->set_device(i, "Compute and Store");
         list_of_users.at(i)->start_event();
         list_of_users.at(i)->launch_kernel();
-        long offset = i*device_num_batches*batch_size ;//ompute_device_num_batch_offset(i);
-        list_of_users.at(i)->copy_result_to_host(result_vector + offset);
-        list_of_users.at(i)->stop_event();
-        // time_sec = std::max(time_sec, );
     }
+ 
+    for(int i=0; i<list_of_users.size(); i++) {
+        list_of_users.at(i)->set_device(i, "Compute and Store");
+        list_of_users.at(i)->stop_event();
+    }
+
+    
+    for(int i=0; i<list_of_users.size(); i++) {
+        long offset = i*device_num_batches*batch_size ;//compute_device_num_batch_offset(i);
+        list_of_users.at(i)->copy_result_to_host(result_vector + offset);
+    }
+
+
     auto stop = std::chrono::steady_clock::now();
     double time_sec = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
     // std::cout << "===========================================GPU Calculation========================================\n" << std::endl;
