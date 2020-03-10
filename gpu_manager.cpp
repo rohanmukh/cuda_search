@@ -84,16 +84,22 @@ void gpu_manager::search() {
 std::vector<std::tuple<int, int, float>> gpu_manager::top_k(int k){
       auto start = std::chrono::steady_clock::now();
       std::vector<float> myvector (result_vector, result_vector + num_devices * device_num_batches * batch_size);
+      auto stop = std::chrono::steady_clock::now();
+      double time_sec_creat = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
+      double gflops_creat = calculate_gflops(time_sec_creat, device_num_batches *batch_size);
+      print_on_screen("Vectorize", time_sec_creat, gflops_creat, device_num_batches * batch_size * num_devices, 1);
       
+      auto start1 = std::chrono::steady_clock::now();
       std::vector<size_t> indices = partial_sort_indexes(myvector, k);
+      auto stop1 = std::chrono::steady_clock::now();
       std::vector<std::tuple<int, int, float>> prog_ids;
       for(size_t id: indices){
          int batch_id = id/(batch_size);
          int prog_id = (id) %(batch_size);
          prog_ids.push_back( std::make_tuple(batch_id, prog_id, myvector.at(id)  ));
       }
-      auto stop = std::chrono::steady_clock::now();
-      double time_sec = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count() * 1e-9;
+      //auto stop1 = std::chrono::steady_clock::now();
+      double time_sec = std::chrono::duration_cast<std::chrono::nanoseconds>(stop1 - start1).count() * 1e-9;
       double gflops = calculate_gflops(time_sec, device_num_batches *batch_size);
       print_on_screen("CPU Sort", time_sec, gflops, device_num_batches * batch_size * num_devices, 1);
       return prog_ids;
