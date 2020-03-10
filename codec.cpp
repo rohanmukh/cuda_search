@@ -16,7 +16,7 @@ codec::codec( int data_size_per_batch, int dimension, int num_jsons, int max_dev
     host_db->fill_database();
 
     //TODO: change num_batches -> is same as num_jsons
-    gpu_user = new gpu_manager(max_devices, host_db->num_batches, host_db->batch_size, dimension);
+    gpu_user = new gpu_manager(max_devices, host_db->num_batches, data_size_per_batch, dimension);
     gpu_user->copy_database_to_device(host_db->host_database_B, host_db->host_database_A,
                                       host_db->host_database_prob_Y
     );

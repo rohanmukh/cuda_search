@@ -11,9 +11,7 @@ class host_database {
     int dimension;
 
 public:
-    int num_batches; int batch_size;
-
-public:
+    int num_batches; 
     float **host_database_B, **host_database_A, **host_database_prob_Y;
 
 public:
