@@ -19,7 +19,7 @@ class codec {
     cpu_manager *cpu_user;
     int data_size_per_batch;
 public:
-    codec(int data_size_per_batch, int dimension, int num_jsons);
+    codec(int data_size_per_batch, int dimension, int num_jsons, int max_devices);
     void search(float*, float*);
     void verify(float*, float*);
     void _free();

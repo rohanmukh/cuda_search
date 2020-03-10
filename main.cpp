@@ -29,13 +29,14 @@
 
 #define DATA_SIZE_PER_BATCH 100000
 #define NUM_JSONS 8
+#define MAX_DEVICES 8
 
 std::string todo_log_path = "/home/ubuntu/cuda_search/encoder_op.json";
 /*main function*/
 int main()
 {
 
-    auto *system = new codec( DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
+    auto *system = new codec( DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS, MAX_DEVICES);
     auto *query = new query_holder(DIMENSION);
     auto *_server =  new server();
 
