@@ -6,7 +6,7 @@
 #define CUDA_SEARCH_CODEC_H
 #include "gpu_manager.h"
 #include "cpu_manager.h"
-//#include "host_database.h"
+#include "host_database.h"
 #include "database_reader.h"
 
 #include <fstream>
@@ -14,7 +14,8 @@
 #include<json/writer.h>
 
 class codec {
-    database_reader *host_db;
+//    database_reader *host_db;
+    host_database *host_db;
     gpu_manager *gpu_user;
     cpu_manager *cpu_user;
     int data_size_per_batch;
@@ -23,7 +24,7 @@ public:
     void search(float*, float*);
     void verify(float*, float*);
     void _free();
-    void dump_json(Json::Value event);
+    void dump_json(std::vector<std::tuple<int, int, float>> );
 };
 
 

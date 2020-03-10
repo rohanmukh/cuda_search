@@ -7,12 +7,12 @@
 #include <cstdlib>
 #include <iostream>
 
-host_database::host_database(long data_size, int dimension) {
+host_database::host_database(int num_batches, int data_size, int dimension) {
 
     this->dimension = dimension;
     this->data_size = data_size;
 
-    this->num_batches = 1;
+    this->num_batches = num_batches;
     this->batch_size = this->data_size/this->num_batches;
 
     host_database_B = (float**)malloc(num_batches * sizeof(float*)); //new float[data_size * dimension];
@@ -64,4 +64,8 @@ void host_database::_free() {
     free(host_database_B);
     free(host_database_A);
     free(host_database_prob_Y);
+}
+
+Program* database_reader::get_program(int batch_id ,int batch_prog_id){
+    return new Program(dimension);
 }

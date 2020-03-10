@@ -16,6 +16,7 @@ class Program {
 
 public:
     Program(int dimension, Json::Value &program_json, float*, float*, float*);
+    Program(int dimension); //fake program
     std::string get_body();
 };
 
