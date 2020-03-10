@@ -9,6 +9,10 @@
 //#include "host_database.h"
 #include "database_reader.h"
 
+#include <fstream>
+#include <iostream>
+#include<json/writer.h>
+
 class codec {
     database_reader *host_db;
     gpu_manager *gpu_user;
@@ -19,7 +23,7 @@ public:
     void search(float*, float*);
     void verify(float*, float*);
     void _free();
-
+    void dump_json(Json::Value event);
 };
 
 
