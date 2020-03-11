@@ -56,7 +56,7 @@ void host_database::fill_database() {
 
 
 void host_database::shrink(int new_num_batches) {
-    assert(new_num_batches<this->num_batches);
+    assert(new_num_batches<=this->num_batches);
     for (int i=new_num_batches;i<this->num_batches; i++) {
         free(host_database_B[i]);
         free(host_database_A[i]);

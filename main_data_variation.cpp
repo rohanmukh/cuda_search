@@ -41,12 +41,12 @@ int main()
     system->set_gpu_user(MAX_DEVICES);
 
     auto *query = new query_holder(DIMENSION);
-    std::vector<int> num_json_array{280, 256, 128, 64, 32, 16, 8, 4, 2, 1};
+    std::vector<int> num_json_array{280, 256, 128, 64, 32, 16, 8};
 
     for(int i=0;i<num_json_array.size();i++){
         int num_jsons = num_json_array.at(i);
         system->shrink_data(num_jsons, MAX_DEVICES);
-        std::cout << "/* Running on NUM DEVICE :: " << num_devices << "*/"<< std::endl;
+        std::cout << "/* Running on NUM JSONs :: " << num_jsons << "*/"<< std::endl;
         query->read_input_json(todo_log_path);
         system->search(query->host_query_B, query->host_query_A);
         //system->verify(query->host_query_B, query->host_query_A);
