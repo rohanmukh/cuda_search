@@ -29,8 +29,8 @@
 #define DIMENSION 256
 
 #define DATA_SIZE_PER_BATCH 100000
-#define NUM_JSONS 280
-#define MAX_DEVICES 8
+#define NUM_JSONS 256
+#define MAX_DEVICES 16
 
 std::string todo_log_path = "/home/ubuntu/cuda_search/encoder_op.json";
 /*main function*/
@@ -41,7 +41,7 @@ int main()
     system->set_gpu_user(MAX_DEVICES);
 
     auto *query = new query_holder(DIMENSION);
-    std::vector<int> num_json_array{280, 256, 128, 64, 32, 16, 8, 4, 2, 1};
+    std::vector<int> num_json_array{256, 128, 64, 32, 16, 8, 4, 2, 1};
 
     for(int i=0;i<num_json_array.size();i++){
         int num_jsons = num_json_array.at(i);

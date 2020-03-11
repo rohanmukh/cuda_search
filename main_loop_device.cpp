@@ -29,18 +29,18 @@
 #define DIMENSION 256
 
 #define DATA_SIZE_PER_BATCH 100000
-#define NUM_JSONS 280 
+#define NUM_JSONS 80
 //#define MAX_DEVICES 8
 
 std::string todo_log_path = "/home/ubuntu/cuda_search/encoder_op.json";
 /*main function*/
 int main()
 {
-
+    std::cout << "/* Running on NUM JSONS :: " << NUM_JSONS << "*/"<< std::endl;
     auto *system = new codec( DATA_SIZE_PER_BATCH, DIMENSION, NUM_JSONS);
     auto *query = new query_holder(DIMENSION);
 
-    for(int i=0;i<=3;i++){
+    for(int i=0;i<=4;i++){
         int num_devices = pow(2,i);
         std::cout << "/* Running on NUM DEVICE :: " << num_devices << "*/"<< std::endl;
         system->set_gpu_user(num_devices); 
