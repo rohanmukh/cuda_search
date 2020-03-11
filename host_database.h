@@ -17,6 +17,7 @@ public:
 public:
     host_database(int, int, int);
     void allocate();
+    void shrink(int new_num_batches);
     void fill_database();
     void _free();
     Program* get_program(int,int);

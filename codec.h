@@ -24,6 +24,7 @@ public:
     void set_gpu_user(int);
     void search(float*, float*);
     void verify(float*, float*);
+    void shrink_data(int max_jsons, int num_devices);
     void _free();
     void dump_json(std::vector<std::tuple<int, int, float>> );
 };

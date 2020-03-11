@@ -31,7 +31,10 @@ codec::codec( int data_size_per_batch, int dimension, int num_jsons){
 
 }
 
-
+void codec::shrink_data(int max_jsons, int num_devices){
+    host_db->shrink(max_jsons);
+    set_gpu_user(num_devices);
+}
 
 void codec::set_gpu_user(int num_devices){
 

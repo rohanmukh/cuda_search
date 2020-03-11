@@ -93,7 +93,7 @@ double single_gpu_manager::stop_event() {
     CUDA_SAFE_CALL(cudaEventSynchronize (stop));
     CUDA_SAFE_CALL(cudaEventElapsedTime ( &elapsedTime, start, stop));
     double Tsec= 1.0e-3*elapsedTime; // time in seconds
-    std::cout <<  "Time by a kernel in seconds"  << Tsec << std::endl;
+//    std::cout <<  "Time by a kernel in seconds"  << Tsec << std::endl;
     return Tsec;
 }
 

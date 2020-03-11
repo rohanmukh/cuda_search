@@ -6,6 +6,7 @@
 #include "utils.h"
 #include <cstdlib>
 #include <iostream>
+#include <cassert>
 
 host_database::host_database(int num_batches, int data_size, int dimension) {
 
@@ -52,6 +53,19 @@ void host_database::fill_database() {
         fill_with_random_doubles(host_database_prob_Y[i], data_size);
     }
 }
+
+
+void host_database::shrink(int new_num_batches) {
+    assert(new_num_batches<this->num_batches);
+    for (int i=new_num_batches;i<this->num_batches; i++) {
+        free(host_database_B[i]);
+        free(host_database_A[i]);
+        free(host_database_prob_Y[i]);
+    }
+    this->num_batches = new_num_batches;
+
+}
+
 
 void host_database::_free() {
     //free host memory----------
